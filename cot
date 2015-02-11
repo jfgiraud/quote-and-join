@@ -18,8 +18,8 @@ SYNOPSYS:
              -l   line
 
         Quote:
-             -q  '         (left+right)
-             -qq "         (left+right)
+             -q  [ie ']         (left+right)
+             -qq [ie "]         (left+right)
              -a  <string>       (left)
              -b  <string>       (right)
              -c  <string>       (left+right)
@@ -35,22 +35,33 @@ SYNOPSYS:
 
         Join items:
              -j  <string>  
-
-        Defaults values are:
-             -l
-             -qq
-             -j'\n'
+             -J  [ie , ]
 
         Example:
+
+        $ echo lorem ipsum dolores est | ${0##*/} -w -q -j,
+        'lorem','ipsum','dolores','est'
+
+        $ echo lorem ipsum dolores est | ${0##*/} -w -qq -j', '
+        "lorem", "ipsum", "dolores", "est"
 
         $ echo lorem ipsum dolores est | ${0##*/} -w -a'<' -b'>' -j# 
         <lorem>#<ipsum>#<dolores>#<est>
 
         $ echo lorem ipsum dolores est | ${0##*/} -w
-        "lorem", "ipsum", "dolores", "est"
+        lorem
+        ipsum
+        dolores
+        est
 
         $ echo lorem ipsum dolores est | ${0##*/} -w -p'<' -j# 
         <lorem>#<ipsum>#<dolores>#<est>
+
+        $ printf "lorem\nipsum\n dolores\n\nest" | ${0##*/} -qq -j, 
+        "lorem","ipsum","dolores","est"
+
+        $ printf "lorem\nipsum\n dolores\n\nest" | ${0##*/} -qq -J 
+        "lorem", "ipsum", "dolores", "est"
 
 With no FILE, or when FILE is -, read standard input.
 
@@ -58,7 +69,7 @@ AUTHOR
 	Written by Jean-François Giraud.
 
 COPYRIGHT
-	Copyright © 2013 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+	Copyright © 2013-2015 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
 	This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
 
 EOF
@@ -83,7 +94,7 @@ strip=1
 escape=1
 qchar=''
 join='\n'
-while getopts ":qlwthj:a:b:c:p:usSue" o
+while getopts ":qlwthj:Ja:b:c:p:usSue" o
 do  
 	case "$o" in
 		h) usage ;;
@@ -92,6 +103,7 @@ do
 		   strip=1
 		   ;;
 	        j) join="$OPTARG";;
+                J) join=", ";;
 	        q) if [ -z "$qchar" ]; then
 		           qchar="'"
 		   else
