@@ -1,4 +1,4 @@
-# cot
+# ![cot Logo](https://raw.githubusercontent.com/jfgiraud/cot/master/cot.png) cot
 
 ### description
 
