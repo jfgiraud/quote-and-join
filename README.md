@@ -36,7 +36,7 @@ Join items:
      -J  [ie , ]
 ```
 
-### examples of use
+### examples
 
 ```
 $ echo lorem ipsum dolores est | cot -w -q -j,
