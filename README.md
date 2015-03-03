@@ -1,13 +1,13 @@
-# ![cot Logo](https://raw.githubusercontent.com/jfgiraud/cot/master/cot.png) cot
+# ![qaj Logo](https://raw.githubusercontent.com/jfgiraud/qaj/master/qaj.png) qaj
 
 ### description
 
-cot is a small utility to quote and join words or lines in files.
+qaj is a small utility to quote and join words or lines in files.
 
 ### usage
 
 ```
-cot [ -w | -l ] [ [ -a <string> | -b <string> | -c <string> ] | [ -p <string> ] | [ -q | -qq ] ] [ -j <string> | J ] [ [ -s | -S ] | -u ] [ -t ] [ -e ]
+qaj [ -w | -l ] [ [ -a <string> | -b <string> | -c <string> ] | [ -p <string> ] | [ -q | -qq ] ] [ -j <string> | J ] [ [ -s | -S ] | -u ] [ -t ] [ -e ]
 
 Where:
 
@@ -39,27 +39,27 @@ Join items:
 ### examples
 
 ```
-$ echo lorem ipsum dolores est | cot -w -q -j,
+$ echo lorem ipsum dolores est | qaj -w -q -j,
 'lorem','ipsum','dolores','est'
 
-$ echo lorem ipsum dolores est | cot -w -qq -j', '
+$ echo lorem ipsum dolores est | qaj -w -qq -j', '
 "lorem", "ipsum", "dolores", "est"
 
-$ echo lorem ipsum dolores est | cot -w -a'<' -b'>' -j# 
+$ echo lorem ipsum dolores est | qaj -w -a'<' -b'>' -j# 
 <lorem>#<ipsum>#<dolores>#<est>
 
-$ echo lorem ipsum dolores est | cot -w
+$ echo lorem ipsum dolores est | qaj -w
 lorem
 ipsum
 dolores
 est
 
-$ echo lorem ipsum dolores est | cot -w -p'<' -j# 
+$ echo lorem ipsum dolores est | qaj -w -p'<' -j# 
 <lorem>#<ipsum>#<dolores>#<est>
 
-$ printf "lorem\nipsum\n dolores\n\nest" | cot -qq -j, 
+$ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j, 
 "lorem","ipsum","dolores","est"
 
-$ printf "lorem\nipsum\n dolores\n\nest" | cot -qq -J 
+$ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -J 
 "lorem", "ipsum", "dolores", "est"
 ```
