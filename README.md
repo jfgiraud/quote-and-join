@@ -2,7 +2,7 @@
 
 ### description
 
-qaj is a small utility to quote and join words or lines in files.
+qaj is a small utility to **q**uote **a**nd **j**oin words or lines in files.
 
 ### usage
 
