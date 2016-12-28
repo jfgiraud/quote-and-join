@@ -9,7 +9,7 @@ NAME:
 
 SYNOPSYS:
 
-        ${0##*/} [ -w | -l | -d <string> ] [ [ -a <string> | -b <string> -c <string> ] | [ -q | -qq ] ] [ -j <string> ] [ [ -s | -S ] | -u ]
+        ${0##*/} [ -w | -l ] [ [ -a <string> | -b <string> -c <string> ] | [ -q | -qq ] ] [ -j <string> ] [ [ -s | -S ] | -u ]
 
         Where:
 
@@ -37,7 +37,11 @@ SYNOPSYS:
              -j  <string>  
              -J  [ie , ]
 
-        Example:
+        After the process of quoting, sorting and/or jointing:
+             -A <string>        append string to the left on the final result
+             -B <string>        append string to the right on the final result
+
+        Examples:
 
         $ echo lorem ipsum dolores est | ${0##*/} -w -q -j,
         'lorem','ipsum','dolores','est'
@@ -62,6 +66,9 @@ SYNOPSYS:
 
         $ printf "lorem\nipsum\n dolores\n\nest" | ${0##*/} -qq -J 
         "lorem", "ipsum", "dolores", "est"
+
+        $ printf "lorem\nipsum\n dolores\n\nest" | ${0##*/} -qq -J -A "<" -B ">"
+        <"lorem", "ipsum", "dolores", "est">
 
 With no FILE, or when FILE is -, read standard input.
 
@@ -93,8 +100,10 @@ right=''
 strip=1
 escape=1
 qchar=''
+before=''
+after=''
 join='\n'
-while getopts ":qlwthj:Ja:b:c:p:usSue" o
+while getopts ":qlwthj:Ja:b:c:p:A:B:usSue" o
 do  
 	case "$o" in
 		h) usage ;;
@@ -112,9 +121,13 @@ do
 		   ;;
 		a) left="$OPTARG"
 		   ;;
+		A) before="$OPTARG"
+		   ;;
 	        t) strip=0;;
 	        e) escape=0;;
 		b) right="$OPTARG"
+		   ;;
+		B) after="$OPTARG"
 		   ;;
 		c) left="$OPTARG"
 		   right="$OPTARG"
@@ -206,7 +219,7 @@ do
 		    print "$word"
 		done
 	    fi
-	done | mysort | sed ":a;N;\$!ba;s/\n/$join/g"
+	done | mysort | sed ":a;N;\$!ba;s/\n/$join/g" | sed -e "1s/^/$before/;\$s/$/$after/;"
 	shift
 	file="$1"
 done
