@@ -1,0 +1,144 @@
+#!/bin/bash
+
+usage() {
+	cat <<-EOF
+NAME
+
+    ${0##*/} - split and unquote lines in files
+
+SYNOPSYS
+
+    ${0##*/} [OPTION]... [FILE]...
+
+DESCRIPTION
+
+    OPTION:
+
+        Unquoting:
+             -q  [ie ']         (left+right)
+             -qq [ie "]         (left+right)
+             -a  <string>       (left)
+             -b  <string>       (right)
+             -c  <string>       (left+right)
+             -p  <parenthese>   (left+right) where parenthese must be <, {, ( or [
+                                right parenthese will be the closing parenthese
+
+        Splitting:
+             -j  <string>
+             -J  [ie , ]
+
+        Before the process of splitting and unquoting:
+             -A <string>        remove string to the left
+             -B <string>        remove string to the right
+             -C <string>        remove string to the left+right
+
+    FILE:
+
+        With no FILE, or when FILE is -, read standard input.
+
+EXAMPLES
+
+    $ s="before{first item},{second  item},{third item}after"
+    $ echo $s | ./uqaj -j, -p'{' -A before -B after
+    first item
+    second item
+    third item
+
+    $ s='<"lorem", "ipsum", "dolores", "est">'
+    $ echo $s | ./uqaj -J -A '<' -B '>' -qq
+    lorem
+    ipsum
+    dolores
+    est
+
+AUTHOR
+	Written by Jean-François Giraud.
+
+COPYRIGHT
+	Copyright © 2013-2020 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+	This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
+
+EOF
+}
+
+qchar=''
+before=''
+after=''
+left=''
+right=''
+join='\n'
+while getopts ":qhj:JA:a:B:b:c:p:" o
+do
+	case "$o" in
+		b)
+		    right="$OPTARG"
+		    ;;
+		c)
+		    left="$OPTARG"
+		    right="$OPTARG"
+		    ;;
+		h)
+		    usage
+		    ;;
+        j)
+            join="$OPTARG"
+            ;;
+        J)
+            join=", "
+            ;;
+        p)
+            if [ "$OPTARG" == '<' ]; then
+                right=">"
+		    elif [ "$OPTARG" == '(' ]; then
+		        right=")"
+		    elif [ "$OPTARG" == '{' ]; then
+		        right="}"
+		    elif [ "$OPTARG" == '[' ]; then
+		        right="]"
+		    else
+		        error 1 "Invalid paren!"
+            fi
+		    left="$OPTARG"
+		    ;;
+		q)
+            if [ -z "$qchar" ]; then
+                qchar="'"
+		    else
+                qchar='"'
+		    fi
+		    ;;
+		a)
+		    left="$OPTARG"
+		    ;;
+		A)
+		    before="$OPTARG"
+		    ;;
+		B)
+		    after="$OPTARG"
+		    ;;
+        ?) error 1 $"invalid option -- '$OPTARG'";;
+	esac
+done
+
+if [ -n "$qchar" ]; then
+    left="$qchar"
+    right="$qchar"
+fi
+
+shift $(($OPTIND - 1))
+
+file="$1"
+if [ -z $file ]; then
+    file="-"
+fi
+
+while [ -n "$file" ];
+do
+	cat "$file" | sed -e "1s/^${before}//" -e "\$s/${after}$//" | while read line || [[ $line ]]
+	do
+        echo "$line" | sed -e "1s/^${left}//" -e "s/${right}${join}${left}/\n/g" -e "\$s/${right}$//"
+	done
+	shift
+	file="$1"
+done
+
