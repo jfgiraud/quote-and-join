@@ -1,17 +1,19 @@
-#!/bin/bash -i
+#!/bin/bash
 
 
 usage() {
-	cat <<-EOF
-NAME:
+    cat <<-EOF
+NAME
 
-        ${0##*/} - quote and join words or lines in files
+    ${0##*/} - quote and join words or lines in files
 
-SYNOPSYS:
+SYNOPSYS
 
-        ${0##*/} [ -w | -l ] [ [ -a <string> | -b <string> -c <string> ] | [ -q | -qq ] ] [ -j <string> ] [ [ -s | -S ] | -u ]
+    ${0##*/} [OPTION]... [FILE]...
 
-        Where:
+DESCRIPTION
+
+    OPTION:
 
         Item selector:
              -w   word
@@ -34,53 +36,59 @@ SYNOPSYS:
              -u  remove duplicate items (implies -s or -S option)
 
         Join items:
-             -j  <string>  
+             -j  <string>
              -J  [ie , ]
 
         After the process of quoting, sorting and/or jointing:
              -A <string>        append string to the left on the final result
              -B <string>        append string to the right on the final result
+             -C <string>        append string to the left+right on the final result
 
-        Examples:
+    FILE:
 
-        $ echo lorem ipsum dolores est | ${0##*/} -w -q -j,
-        'lorem','ipsum','dolores','est'
+        With no FILE, or when FILE is -, read standard input.
 
-        $ echo lorem ipsum dolores est | ${0##*/} -w -qq -j', '
-        "lorem", "ipsum", "dolores", "est"
 
-        $ echo lorem ipsum dolores est | ${0##*/} -w -a'<' -b'>' -j# 
-        <lorem>#<ipsum>#<dolores>#<est>
 
-        $ echo lorem ipsum dolores est | ${0##*/} -w
-        lorem
-        ipsum
-        dolores
-        est
+EXAMPLES
 
-        $ echo lorem ipsum dolores est | ${0##*/} -w -p'<' -j# 
-        <lorem>#<ipsum>#<dolores>#<est>
+    $ echo lorem ipsum dolores est | ${0##*/} -w -q -j,
+    'lorem','ipsum','dolores','est'
 
-        $ printf "lorem\nipsum\n dolores\n\nest" | ${0##*/} -qq -j, 
-        "lorem","ipsum","dolores","est"
+    $ echo lorem ipsum dolores est | ${0##*/} -w -qq -j', '
+    "lorem", "ipsum", "dolores", "est"
 
-        $ printf "lorem\nipsum\n dolores\n\nest" | ${0##*/} -qq -J 
-        "lorem", "ipsum", "dolores", "est"
+    $ echo lorem ipsum dolores est | ${0##*/} -w -a'<' -b'>' -j#
+    <lorem>#<ipsum>#<dolores>#<est>
 
-        $ printf "lorem\nipsum\n dolores\n\nest" | ${0##*/} -qq -J -A "<" -B ">"
-        <"lorem", "ipsum", "dolores", "est">
+    $ echo lorem ipsum dolores est | ${0##*/} -w
+    lorem
+    ipsum
+    dolores
+    est
 
-With no FILE, or when FILE is -, read standard input.
+    $ echo lorem ipsum dolores est | ${0##*/} -w -p'<' -j#
+    <lorem>#<ipsum>#<dolores>#<est>
+
+    $ printf "lorem\nipsum\n dolores\n\nest" | ${0##*/} -qq -j,
+    "lorem","ipsum","dolores","est"
+
+    $ printf "lorem\nipsum\n dolores\n\nest" | ${0##*/} -qq -J
+    "lorem", "ipsum", "dolores", "est"
+
+    $ printf "lorem\nipsum\n dolores\n\nest" | ${0##*/} -qq -J -A "<" -B ">"
+    <"lorem", "ipsum", "dolores", "est">
+
 
 AUTHOR
 	Written by Jean-François Giraud.
 
 COPYRIGHT
-	Copyright © 2013-2015 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+	Copyright © 2013-2020 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
 	This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
 
 EOF
-	exit 0
+    exit 0
 }
 
 error() {
@@ -103,55 +111,82 @@ qchar=''
 before=''
 after=''
 join='\n'
-while getopts ":qlwthj:Ja:b:c:p:A:B:usSue" o
+while getopts ":qlwthj:Ja:b:c:p:A:B:C:usSue" o
 do  
 	case "$o" in
-		h) usage ;;
-		l) what='l';;
-		w) what='w'
-		   strip=1
-		   ;;
-	        j) join="$OPTARG";;
-                J) join=", ";;
-	        q) if [ -z "$qchar" ]; then
-		           qchar="'"
-		   else
-		           qchar='"'
-		   fi
-		   ;;
-		a) left="$OPTARG"
-		   ;;
-		A) before="$OPTARG"
-		   ;;
-	        t) strip=0;;
-	        e) escape=0;;
-		b) right="$OPTARG"
-		   ;;
-		B) after="$OPTARG"
-		   ;;
-		c) left="$OPTARG"
-		   right="$OPTARG"
-		   ;;
-                p) if [ "$OPTARG" == '<' ]; then
-		     right=">"
-		   elif [ "$OPTARG" == '(' ]; then
-		     right=")"
-		   elif [ "$OPTARG" == '{' ]; then
-		     right="}"
-		   elif [ "$OPTARG" == '[' ]; then
-		     right="]"
-		   else
-		     error 1 "Invalid paren!"
-                   fi
-		   left="$OPTARG"
-		   ;;
-	        s) sortorder=""
-		   ;;
-	        S) sortorder="-r"
-		   ;;
-	        u) sortunique="-u"
-		   ;;
-	        ?) error 1 $"invalid option -- '$OPTARG'";;
+		h)
+		    usage
+		    ;;
+		l)
+		    what='l'
+		    ;;
+		w)
+		    what='w'
+		    strip=1
+		    ;;
+        j)
+            join="$OPTARG"
+            ;;
+        J)
+            join=", "
+            ;;
+        q)
+            if [ -z "$qchar" ]; then
+                qchar="'"
+		    else
+                qchar='"'
+		    fi
+		    ;;
+		a)
+		    left="$OPTARG"
+		    ;;
+		A)
+		    before="$OPTARG"
+		    ;;
+        t)
+            strip=0
+            ;;
+        e)
+            escape=0
+            ;;
+		b)
+		    right="$OPTARG"
+		    ;;
+		B)
+		    after="$OPTARG"
+		    ;;
+		c)
+		    left="$OPTARG"
+		    right="$OPTARG"
+		    ;;
+		C)
+		    before="$OPTARG"
+		    after="$OPTARG"
+		    ;;
+        p)
+            if [ "$OPTARG" == '<' ]; then
+                right=">"
+		    elif [ "$OPTARG" == '(' ]; then
+		        right=")"
+		    elif [ "$OPTARG" == '{' ]; then
+		        right="}"
+		    elif [ "$OPTARG" == '[' ]; then
+		        right="]"
+		    else
+		        error 1 "Invalid paren!"
+            fi
+		    left="$OPTARG"
+		    ;;
+        s)
+            sortorder=""
+		    ;;
+        S)
+            sortorder="-r"
+            ;;
+        u)
+            sortunique="-u"
+		    ;;
+        ?) error 1 $"invalid option -- '$OPTARG'";;
 	esac
 done
 
@@ -164,7 +199,7 @@ shift $(($OPTIND - 1))
 
 file="$1"
 if [ -z $file ]; then
-        file="-"
+    file="-"
 fi
 
 shopt -s extglob
@@ -191,19 +226,19 @@ function escape() {
 function print() {
     local w="$1"
     if [ $strip -eq 1 ]; then
-	w=$(strip "$w")
+	    w=$(strip "$w")
     fi
     if [ $escape -eq 1 ]; then
-	w=$(escape "$w")
+	    w=$(escape "$w")
     fi
     [ -n "$w" ] && echo "$left$w$right"
 }
 
 function mysort() {
     if [ -v sortorder -o -v sortunique ]; then
-	sort $sortorder $sortunique
+	    sort $sortorder $sortunique
     else
-	cat
+	    cat
     fi
 }
 
@@ -212,12 +247,12 @@ do
 	cat "$file" | while IFS=$'\n' read line || [[ $line ]]
 	do
 	    if [ "$what" == 'l' ]; then
-		print "$line"
+		    print "$line"
 	    elif [ "$what" == 'w' ]; then
-		for word in $line
-		do
-		    print "$word"
-		done
+		    for word in $line
+		    do
+		        print "$word"
+		    done
 	    fi
 	done | mysort | sed ":a;N;\$!ba;s/\n/$join/g" | sed -e "1s/^/$before/;\$s/$/$after/;"
 	shift
