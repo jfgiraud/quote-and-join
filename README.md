@@ -3,4 +3,4 @@
 ### documentation
 
 - qaj [quote and join](qaj.md)
-- uqaj [split and unquote](uqaj.md)
+- uqaj [un-(quote and join)](uqaj.md)
