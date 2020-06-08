@@ -31,6 +31,9 @@ DESCRIPTION
              -A <string>        remove string to the left
              -B <string>        remove string to the right
              -C <string>        remove string to the left+right
+             -P <parenthese>    remove parentheses to the left+right
+                                the specified parenthese is the opening parenthese (<, {, ( or [)
+                                the right parenthese will be the closing parenthese
 
     FILE:
 
@@ -67,7 +70,7 @@ after=''
 left=''
 right=''
 join='\n'
-while getopts ":qhj:JA:a:B:b:c:p:" o
+while getopts ":qhj:JA:a:B:b:c:p:P:" o
 do
 	case "$o" in
 		b)
@@ -99,6 +102,20 @@ do
 		        error 1 "Invalid paren!"
             fi
 		    left="$OPTARG"
+		    ;;
+        P)
+            if [ "$OPTARG" == '<' ]; then
+                after=">"
+		    elif [ "$OPTARG" == '(' ]; then
+		        after=")"
+		    elif [ "$OPTARG" == '{' ]; then
+		        after="}"
+		    elif [ "$OPTARG" == '[' ]; then
+		        after="]"
+		    else
+		        error 1 "Invalid paren!"
+            fi
+		    before="$OPTARG"
 		    ;;
 		q)
             if [ -z "$qchar" ]; then

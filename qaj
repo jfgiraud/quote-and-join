@@ -43,6 +43,9 @@ DESCRIPTION
              -A <string>        append string to the left on the final result
              -B <string>        append string to the right on the final result
              -C <string>        append string to the left+right on the final result
+             -P <parenthese>    append parentheses to the left+right on the final result
+                                the specified parenthese is the opening parenthese (<, {, ( or [)
+                                the right parenthese will be the closing parenthese
 
     FILE:
 
@@ -111,7 +114,7 @@ qchar=''
 before=''
 after=''
 join='\n'
-while getopts ":qlwthj:Ja:b:c:p:A:B:C:usSue" o
+while getopts ":qlwthj:Ja:b:c:p:P:A:B:C:usSue" o
 do  
 	case "$o" in
 		h)
@@ -176,6 +179,20 @@ do
 		        error 1 "Invalid paren!"
             fi
 		    left="$OPTARG"
+		    ;;
+		P)
+            if [ "$OPTARG" == '<' ]; then
+                after=">"
+		    elif [ "$OPTARG" == '(' ]; then
+		        after=")"
+		    elif [ "$OPTARG" == '{' ]; then
+		        after="}"
+		    elif [ "$OPTARG" == '[' ]; then
+		        after="]"
+		    else
+		        error 1 "Invalid paren!"
+            fi
+		    before="$OPTARG"
 		    ;;
         s)
             sortorder=""
