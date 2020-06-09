@@ -230,7 +230,7 @@ function strip() {
 
 function escape() {
     local s="$1"
-    if [ "$left" == "$right" ]; then
+    if [[ "$left" == "$right" ]]; then
         s=${s//$left/\\$left}
     else
         s=${s//$left/\\$left}
@@ -242,10 +242,10 @@ function escape() {
 
 function print() {
     local w="$1"
-    if [ $strip -eq 1 ]; then
+    if [[ $strip -eq 1 ]]; then
 	      w=$(strip "$w")
     fi
-    if [ $escape -eq 1 ]; then
+    if [[ $escape -eq 1 ]]; then
 	     w=$(escape "$w")
     fi
     [[ -n "$w" ]] && echo "$left$w$right"
