@@ -20,32 +20,32 @@ DESCRIPTION
              -l   line
 
         Quote:
-             -q  [ie ']         (left+right)
-             -qq [ie "]         (left+right)
-             -a  <string>       (left)
-             -b  <string>       (right)
-             -c  <string>       (left+right)
-             -p  <parenthese>   (left+right) where parenthese must be <, {, ( or [
-                                right parenthese will be the closing parenthese
-             -t   do not trim item
-             -e   do not escape parentheses in item
+            -q  [ie ']         (left+right)
+            -qq [ie "]         (left+right)
+            -a  <string>       (left)
+            -b  <string>       (right)
+            -c  <string>       (left+right)
+            -p  <parenthese>   (left+right) where parenthese must be <, {, ( or [
+                               right parenthese will be the closing parenthese
+            -t   do not trim item
+            -e   do not escape parentheses in item
 
         Sort:
-             -s  sort
-             -S  sort in reverse order
-             -u  remove duplicate items (implies -s or -S option)
+            -s  sort
+            -S  sort in reverse order
+            -u  remove duplicate items (implies -s or -S option)
 
         Join delimiter:
-             -j  <string>
-             -J  [ie , ]
+            -j  <string>
+            -J  [ie , ]
 
         After the process of quoting, sorting and/or jointing:
-             -A <string>        append string to the left on the final result
-             -B <string>        append string to the right on the final result
-             -C <string>        append string to the left+right on the final result
-             -P <parenthese>    append parentheses to the left+right on the final result
-                                the specified parenthese is the opening parenthese (<, {, ( or [)
-                                the right parenthese will be the closing parenthese
+            -A <string>        append string to the left on the final result
+            -B <string>        append string to the right on the final result
+            -C <string>        append string to the left+right on the final result
+            -P <parenthese>    append parentheses to the left+right on the final result
+                               the specified parenthese is the opening parenthese (<, {, ( or [)
+                               the right parenthese will be the closing parenthese
 
     FILE:
 
@@ -116,17 +116,17 @@ after=''
 join='\n'
 while getopts ":qlwthj:Ja:b:c:p:P:A:B:C:usSue" o
 do  
-	case "$o" in
-		h)
-		    usage
-		    ;;
-		l)
-		    what='l'
-		    ;;
-		w)
-		    what='w'
-		    strip=1
-		    ;;
+	  case "$o" in
+		    h)
+            usage
+            ;;
+	    	l)
+            what='l'
+            ;;
+	    	w)
+            what='w'
+            strip=1
+            ;;
         j)
             join="$OPTARG"
             ;;
@@ -136,78 +136,78 @@ do
         q)
             if [ -z "$qchar" ]; then
                 qchar="'"
-		    else
+		        else
                 qchar='"'
-		    fi
-		    ;;
-		a)
-		    left="$OPTARG"
-		    ;;
-		A)
-		    before="$OPTARG"
-		    ;;
+            fi
+            ;;
+	    	a)
+            left="$OPTARG"
+            ;;
+        A)
+            before="$OPTARG"
+            ;;
         t)
             strip=0
             ;;
         e)
             escape=0
             ;;
-		b)
-		    right="$OPTARG"
-		    ;;
-		B)
-		    after="$OPTARG"
-		    ;;
-		c)
-		    left="$OPTARG"
-		    right="$OPTARG"
-		    ;;
-		C)
-		    before="$OPTARG"
-		    after="$OPTARG"
-		    ;;
+	    	b)
+            right="$OPTARG"
+            ;;
+	  	  B)
+            after="$OPTARG"
+            ;;
+	  	  c)
+            left="$OPTARG"
+            right="$OPTARG"
+            ;;
+	  	  C)
+            before="$OPTARG"
+            after="$OPTARG"
+            ;;
         p)
             if [ "$OPTARG" == '<' ]; then
                 right=">"
-		    elif [ "$OPTARG" == '(' ]; then
-		        right=")"
-		    elif [ "$OPTARG" == '{' ]; then
-		        right="}"
-		    elif [ "$OPTARG" == '[' ]; then
-		        right="]"
-		    else
-		        error 1 "Invalid paren!"
+            elif [ "$OPTARG" == '(' ]; then
+                right=")"
+            elif [ "$OPTARG" == '{' ]; then
+                right="}"
+            elif [ "$OPTARG" == '[' ]; then
+                right="]"
+            else
+                error 1 "Invalid paren!"
             fi
-		    left="$OPTARG"
-		    ;;
-		P)
+            left="$OPTARG"
+            ;;
+		    P)
             if [ "$OPTARG" == '<' ]; then
                 after=">"
-		    elif [ "$OPTARG" == '(' ]; then
-		        after=")"
-		    elif [ "$OPTARG" == '{' ]; then
-		        after="}"
-		    elif [ "$OPTARG" == '[' ]; then
-		        after="]"
-		    else
-		        error 1 "Invalid paren!"
+            elif [ "$OPTARG" == '(' ]; then
+                after=")"
+            elif [ "$OPTARG" == '{' ]; then
+                after="}"
+            elif [ "$OPTARG" == '[' ]; then
+                after="]"
+            else
+                error 1 "Invalid paren!"
             fi
-		    before="$OPTARG"
-		    ;;
+            before="$OPTARG"
+            ;;
         s)
             sortorder=""
-		    ;;
+    		    ;;
         S)
             sortorder="-r"
             ;;
         u)
             sortunique="-u"
-		    ;;
+		        ;;
         ?) error 1 $"invalid option -- '$OPTARG'";;
-	esac
+	  esac
 done
 
-if [ -n "$qchar" ]; then
+if [[ -n "$qchar" ]]; then
     left="$qchar"
     right="$qchar"
 fi
@@ -243,36 +243,36 @@ function escape() {
 function print() {
     local w="$1"
     if [ $strip -eq 1 ]; then
-	    w=$(strip "$w")
+	      w=$(strip "$w")
     fi
     if [ $escape -eq 1 ]; then
-	    w=$(escape "$w")
+	     w=$(escape "$w")
     fi
-    [ -n "$w" ] && echo "$left$w$right"
+    [[ -n "$w" ]] && echo "$left$w$right"
 }
 
 function mysort() {
     if [ -v sortorder -o -v sortunique ]; then
-	    sort $sortorder $sortunique
+	      sort $sortorder $sortunique
     else
-	    cat
+	      cat
     fi
 }
 
-while [ -n "$file" ];
+while [[ -n "$file" ]];
 do
-	cat "$file" | while IFS=$'\n' read line || [[ $line ]]
-	do
-	    if [ "$what" == 'l' ]; then
-		    print "$line"
-	    elif [ "$what" == 'w' ]; then
-		    for word in $line
-		    do
-		        print "$word"
-		    done
-	    fi
-	done | mysort | sed ":a;N;\$!ba;s/\n/$join/g" | sed -e "1s/^/$before/;\$s/$/$after/;"
-	shift
-	file="$1"
+    cat "$file" | while IFS=$'\n' read line || [[ $line ]]
+    do
+        if [[ "$what" == 'l' ]]; then
+            print "$line"
+        elif [[ "$what" == 'w' ]]; then
+            for word in $line
+            do
+                print "$word"
+            done
+        fi
+    done | mysort | sed ":a;N;\$!ba;s/\n/$join/g" | sed -e "1s/^/$before/;\$s/$/$after/;"
+    shift
+    file="$1"
 done
 

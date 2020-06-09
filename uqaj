@@ -15,25 +15,25 @@ DESCRIPTION
     OPTION:
 
         Unquoting:
-             -q  [ie ']         (left+right)
-             -qq [ie "]         (left+right)
-             -a  <string>       (left)
-             -b  <string>       (right)
-             -c  <string>       (left+right)
-             -p  <parenthese>   (left+right) where parenthese must be <, {, ( or [
+            -q  [ie ']         (left+right)
+            -qq [ie "]         (left+right)
+            -a  <string>       (left)
+            -b  <string>       (right)
+            -c  <string>       (left+right)
+            -p  <parenthese>   (left+right) where parenthese must be <, {, ( or [
                                 right parenthese will be the closing parenthese
 
         Splitting:
-             -j  <string>
-             -J  [ie , ]
+            -j  <string>
+            -J  [ie , ]
 
         Before the process of splitting and unquoting:
-             -A <string>        remove string to the left
-             -B <string>        remove string to the right
-             -C <string>        remove string to the left+right
-             -P <parenthese>    remove parentheses to the left+right
-                                the specified parenthese is the opening parenthese (<, {, ( or [)
-                                the right parenthese will be the closing parenthese
+            -A <string>        remove string to the left
+            -B <string>        remove string to the right
+            -C <string>        remove string to the left+right
+            -P <parenthese>    remove parentheses to the left+right
+                               the specified parenthese is the opening parenthese (<, {, ( or [)
+                               the right parenthese will be the closing parenthese
 
     FILE:
 
@@ -72,7 +72,7 @@ right=''
 join='\n'
 while getopts ":qhj:JA:a:B:b:c:p:P:" o
 do
-	case "$o" in
+  	case "$o" in
 		b)
 		    right="$OPTARG"
 		    ;;
@@ -83,15 +83,15 @@ do
 		h)
 		    usage
 		    ;;
-        j)
-            join="$OPTARG"
-            ;;
-        J)
-            join=", "
-            ;;
-        p)
-            if [ "$OPTARG" == '<' ]; then
-                right=">"
+    j)
+        join="$OPTARG"
+        ;;
+    J)
+        join=", "
+        ;;
+    p)
+        if [ "$OPTARG" == '<' ]; then
+            right=">"
 		    elif [ "$OPTARG" == '(' ]; then
 		        right=")"
 		    elif [ "$OPTARG" == '{' ]; then
@@ -100,12 +100,12 @@ do
 		        right="]"
 		    else
 		        error 1 "Invalid paren!"
-            fi
+        fi
 		    left="$OPTARG"
 		    ;;
-        P)
-            if [ "$OPTARG" == '<' ]; then
-                after=">"
+    P)
+        if [ "$OPTARG" == '<' ]; then
+            after=">"
 		    elif [ "$OPTARG" == '(' ]; then
 		        after=")"
 		    elif [ "$OPTARG" == '{' ]; then
@@ -114,14 +114,14 @@ do
 		        after="]"
 		    else
 		        error 1 "Invalid paren!"
-            fi
+        fi
 		    before="$OPTARG"
 		    ;;
 		q)
-            if [ -z "$qchar" ]; then
-                qchar="'"
+        if [ -z "$qchar" ]; then
+            qchar="'"
 		    else
-                qchar='"'
+            qchar='"'
 		    fi
 		    ;;
 		a)
@@ -133,11 +133,11 @@ do
 		B)
 		    after="$OPTARG"
 		    ;;
-        ?) error 1 $"invalid option -- '$OPTARG'";;
+    ?) error 1 $"invalid option -- '$OPTARG'";;
 	esac
 done
 
-if [ -n "$qchar" ]; then
+if [[ -n "$qchar" ]]; then
     left="$qchar"
     right="$qchar"
 fi
@@ -145,11 +145,11 @@ fi
 shift $(($OPTIND - 1))
 
 file="$1"
-if [ -z $file ]; then
+if [[ -z $file ]]; then
     file="-"
 fi
 
-while [ -n "$file" ];
+while [[ -n "$file" ]];
 do
 	cat "$file" | sed -e "1s/^${before}//" -e "\$s/${after}$//" | while read line || [[ $line ]]
 	do
