@@ -90,13 +90,13 @@ do
         join=", "
         ;;
     p)
-        if [ "$OPTARG" == '<' ]; then
+        if [[ "$OPTARG" == '<' ]]; then
             right=">"
-		    elif [ "$OPTARG" == '(' ]; then
+		    elif [[ "$OPTARG" == '(' ]]; then
 		        right=")"
-		    elif [ "$OPTARG" == '{' ]; then
+		    elif [[ "$OPTARG" == '{' ]]; then
 		        right="}"
-		    elif [ "$OPTARG" == '[' ]; then
+		    elif [[ "$OPTARG" == '[' ]]; then
 		        right="]"
 		    else
 		        error 1 "Invalid paren!"
@@ -104,13 +104,13 @@ do
 		    left="$OPTARG"
 		    ;;
     P)
-        if [ "$OPTARG" == '<' ]; then
+        if [[ "$OPTARG" == '<' ]]; then
             after=">"
-		    elif [ "$OPTARG" == '(' ]; then
+		    elif [[ "$OPTARG" == '(' ]]; then
 		        after=")"
-		    elif [ "$OPTARG" == '{' ]; then
+		    elif [[ "$OPTARG" == '{' ]]; then
 		        after="}"
-		    elif [ "$OPTARG" == '[' ]; then
+		    elif [[ "$OPTARG" == '[' ]]; then
 		        after="]"
 		    else
 		        error 1 "Invalid paren!"
@@ -118,7 +118,7 @@ do
 		    before="$OPTARG"
 		    ;;
 		q)
-        if [ -z "$qchar" ]; then
+        if [[ -z "$qchar" ]]; then
             qchar="'"
 		    else
             qchar='"'
