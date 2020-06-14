@@ -1,4 +1,4 @@
-# ![qaj Logo](https://raw.githubusercontent.com/jfgiraud/qaj/master/qaj.png) uqaj
+# ![qaj Logo](https://raw.githubusercontent.com/jfgiraud/qaj/master/qaj.png) quote and join utilities
 
 ### documentation
 
