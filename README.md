@@ -2,8 +2,8 @@
 
 
 Links :
-- qaj [quote and join](#qaj--quote-and-join)
-- uqaj [un-(quote and join)](#uqaj-unquote-and-join)
+- qaj [quote and join](#qaj---quote-and-join)
+- uqaj [un-(quote and join)](#uqaj---unquote-and-join)
 
 
 ## qaj - quote and join
@@ -80,7 +80,7 @@ $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -J
 
 
 
-## uqaj unquote and join
+## uqaj - unquote and join
 
 ### description
 
