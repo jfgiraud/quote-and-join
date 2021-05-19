@@ -1,18 +1,23 @@
-# ![qaj Logo](https://raw.githubusercontent.com/jfgiraud/qaj/master/qaj.png) quote and join utilities
+quote and join utilities
+==========================
 
+small utilities to: 
+- quote and join words or lines in files 
+- split and unquote words in files
 
 Links :
 - qaj [quote and join](#qaj---quote-and-join)
 - uqaj [un-(quote and join)](#uqaj---unquote-and-join)
 
+--------------------------
 
-## qaj - quote and join
+# qaj - quote and join
 
-### description
+## description
 
 qaj is a small utility to **q**uote **a**nd **j**oin words or lines in files.
 
-### usage
+## usage
 
 ```
 qaj [OPTION]... [FILE]...
@@ -49,7 +54,7 @@ qaj [OPTION]... [FILE]...
              -C <string>        append string to the left+right on the final result
 ```
 
-### examples
+## examples
 
 ```
 $ echo lorem ipsum dolores est | qaj -w -q -j,
@@ -77,16 +82,14 @@ $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -J
 "lorem", "ipsum", "dolores", "est"
 ```
 
+-----------------------
+# uqaj - unquote and join
 
-
-
-## uqaj - unquote and join
-
-### description
+## description
 
 uqaj is a small utility to split and unquote words in files.
 
-### usage
+## usage
 
 ```
 uqaj [OPTION]... [FILE]...
@@ -112,7 +115,7 @@ uqaj [OPTION]... [FILE]...
              -C <string>        remove string to the left+right
 ```
 
-### examples
+## examples
 
 ```
 $ s="before{first item},{second  item},{third item}after"
