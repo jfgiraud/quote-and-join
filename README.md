@@ -2,7 +2,7 @@
 
 
 Links :
-- qaj [quote and join](#qaj-quote-and-join)
+- qaj [quote and join](#qaj--quote-and-join)
 - uqaj [un-(quote and join)](#uqaj-unquote-and-join)
 
 
