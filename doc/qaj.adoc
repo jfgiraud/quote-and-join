@@ -16,28 +16,28 @@ Quote and join words or lines in FILE(s) to standard output.
 
 With no FILE, or when FILE is -, read standard input.
 
-*-a* _<string>_
+*-a* _STRING_
     quote the left of word or line with the given string
 
-*-A* _<string>_
+*-A* _STRING_
         append string to the left on the final result
 
-*-b* _<string>_
+*-b* _STRING_
     quote the right of word or line with the given string
 
-*-B* _<string>_
+*-B* _STRING_
     append string to the right on the final result
 
-*-c* _<string>_
+*-c* _STRING_
     quote the left and right of word or line with the given string
 
-*-C* _<string>_
+*-C* _STRING_
     append string to the left+right on the final result
 
 *-e*
     do not escape parentheses in item
 
-*-j*  _<string>_
+*-j*  _STRING_
     join with the given string
 
 *-J*
