@@ -6,22 +6,30 @@ usage:
 	@cat - <<EOF
 		Targets:
 		* test: run all tests
-		* test_qaj: run all qaj tests
-		* test_uqaj: run all uqaj tests
+		* install: install scripts in /usr/local/bin
+		* uninstall: remove scripts from /usr/local/bin
 	EOF
 
-.PHONY: test_qaj
-test_qaj: bin/qaj
-	bash tests/qaj_tests.sh
 
-.PHONY: test_uqaj
-test_uqaj: bin/uqaj
-	bash tests/uqaj_tests.sh
+doc/man/man1/qaj.1: doc/qaj.adoc
+	asciidoctor -b manpage doc/qaj.adoc -o doc/man/man1/qaj.1
+
+.PHONY: doc
+doc: doc/man/man1/qaj.1
 
 .PHONY: test
-test: bin/qaj bin/uqaj
+test:
 	bash tests/qaj_tests.sh
 	bash tests/uqaj_tests.sh
+
+.PHONY: install
+install:
+	cp -i bin/qaj /usr/local/bin/qaj
+	cp -i bin/uqaj /usr/local/bin/uqaj
+
+.PHONY: uninstall
+uninstall:
+	rm -f /usr/local/bin/qaj /usr/local/bin/uqaj
 
 
 

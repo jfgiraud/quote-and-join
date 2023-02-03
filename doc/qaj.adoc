@@ -1,0 +1,114 @@
+ifdef::backend-manpage[]
+= qaj(1)
+
+== Name
+endif::[]
+
+qaj - qaj is a small utility to quote and join words or lines in files.
+
+== SYNOPSIS
+
+*qaj* [_OPTION_]... _FILE_...
+
+== DESCRIPTION
+
+=== FILE
+
+Quote and join words or lines in FILE(s) to standard output.
+
+With no FILE, or when FILE is -, read standard input.
+
+=== OPTION
+
+Item selector:
+    *-w*   word
+    *-l*   line
+
+Quote:
+    *-q*
+        quote the left and right of word or line with the character '
+    *-qq*
+        quote the left and right of word or line with the character "
+    *-a* _<string>_
+        quote the left of word or line with the given string
+    *-b* _<string>_
+        quote the right of word or line with the given string
+    *-c* _<string>_
+        quote the left and right of word or line with the given string
+    *-p* _<parenthese>_
+    *-t*
+        do not trim item
+    *-e*
+        do not escape parentheses in item
+
+Sort:
+    *-s*
+        sort
+    *-S*
+        sort in reverse order
+    *-u*
+        remove duplicate items (implies -s or -S option)
+
+Join delimiter:
+    *-j*  _<string>_
+    *-J*  [ie , ]
+
+After the process of quoting, sorting and/or jointing:
+    *-A* _<string>_
+        append string to the left on the final result
+    *-B* _<string>_
+        append string to the right on the final result
+    *-C* _<string>_
+        append string to the left+right on the final result
+
+
+== EXAMPLES
+
+```example 1
+$ echo lorem ipsum dolores est | qaj -w -q -j,
+'lorem','ipsum','dolores','est'
+```
+
+```example 2
+$ echo lorem ipsum dolores est | qaj -w -qq -j', '
+"lorem", "ipsum", "dolores", "est"
+```
+
+```example 3
+$ echo lorem ipsum dolores est | qaj -w -a'<' -b'>' -j# 
+<lorem>#<ipsum>#<dolores>#<est>
+```
+
+```example 4
+$ echo lorem ipsum dolores est | qaj -w
+lorem
+ipsum
+dolores
+est
+```
+
+```example 5
+$ echo lorem ipsum dolores est | qaj -w -p'<' -j# 
+<lorem>#<ipsum>#<dolores>#<est>
+```
+
+```example 6
+$ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j, 
+"lorem","ipsum","dolores","est"
+```
+
+```example 7
+$ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -J 
+"lorem", "ipsum", "dolores", "est"
+```
+
+ifdef::backend-manpage[]
+== AUTHOR
+
+Written by Jean-François Giraud.
+
+== COPYRIGHT
+
+Copyright © 2020 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
+endif::[]
