@@ -5,5 +5,13 @@ insert_final_newline=false
 indent_style=space
 indent_size=4
 
+[*.sh]
+indent_style=space
+indent_size=2
+
+[{*.yml,*.yaml}]
+indent_style=space
+indent_size=2
+
 [Makefile]
 indent_style = tab
