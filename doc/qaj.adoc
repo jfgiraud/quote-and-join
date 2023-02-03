@@ -16,58 +16,58 @@ Quote and join words or lines in FILE(s) to standard output.
 
 With no FILE, or when FILE is -, read standard input.
 
-*-a* _STRING_
+*-a* _STRING_::
     quote the left of word or line with the given string
 
-*-A* _STRING_
+*-A* _STRING_::
         append string to the left on the final result
 
-*-b* _STRING_
+*-b* _STRING_::
     quote the right of word or line with the given string
 
-*-B* _STRING_
+*-B* _STRING_::
     append string to the right on the final result
 
-*-c* _STRING_
+*-c* _STRING_::
     quote the left and right of word or line with the given string
 
-*-C* _STRING_
+*-C* _STRING_::
     append string to the left+right on the final result
 
-*-e*
+*-e*::
     do not escape parentheses in item
 
-*-j*  _STRING_
+*-j*  _STRING_::
     join with the given string
 
-*-J*
+*-J*::
     join with the , character
 
-*-l*
+*-l*::
     select lines
 
-*-p* _<parenthese>_
+*-p* _<parenthese>_::
     quote the left and right of word or line with the given parenthese and its opposite parenthese
 
-*-q*
+*-q*::
     quote the left and right of word or line with the character '
 
-*-qq*
+*-qq*::
     quote the left and right of word or line with the character "
 
-*-s*
+*-s*::
     sort
 
-*-S*
+*-S*::
     sort in reverse order
 
-*-t*
+*-t*::
     do not trim item
 
-*-u*
+*-u*::
     remove duplicate items (implies -s or -S option)
 
-*-w*
+*-w*::
     select words
 
 
