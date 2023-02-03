@@ -25,21 +25,29 @@ Item selector:
     *-l*   line
 
 Quote:
-    *-q*
-        quote the left and right of word or line with the character '
-    *-qq*
-        quote the left and right of word or line with the character "
-    *-a* _<string>_
-        quote the left of word or line with the given string
-    *-b* _<string>_
-        quote the right of word or line with the given string
-    *-c* _<string>_
-        quote the left and right of word or line with the given string
-    *-p* _<parenthese>_
-    *-t*
-        do not trim item
-    *-e*
-        do not escape parentheses in item
+
+*-q*
+    quote the left and right of word or line with the character '
+
+*-qq*
+    quote the left and right of word or line with the character "
+
+*-a* _<string>_
+    quote the left of word or line with the given string
+
+*-b* _<string>_
+    quote the right of word or line with the given string
+
+*-c* _<string>_
+    quote the left and right of word or line with the given string
+
+*-p* _<parenthese>_
+
+*-t*
+    do not trim item
+
+*-e*
+    do not escape parentheses in item
 
 Sort:
     *-s*
