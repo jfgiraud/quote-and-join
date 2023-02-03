@@ -6,4 +6,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: tests
-        run: make uqaj_test
+        run: make test_uqaj
