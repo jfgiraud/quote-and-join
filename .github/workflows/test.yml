@@ -1,9 +1,12 @@
-name: UQAJ Functional Tests
+name: Tests
 on: [push]
 jobs:
   Functional-Tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: tests
+      - name: test_qaj
+        run: make test_qaj
+      - name: test_uqaj
         run: make test_uqaj
+
