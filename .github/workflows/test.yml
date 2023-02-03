@@ -4,7 +4,7 @@ jobs:
   Functional-Tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: test_qaj
         run: make test_qaj
 #      - name: test_uqaj
