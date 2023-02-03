@@ -1,4 +1,5 @@
-[![Build Status](https://jfgiraud.semaphoreci.com/badges/quote-and-join/branches/master.svg?style=shields&key=015394cb-66b2-4bdb-a856-528bb60c860d)](https://jfgiraud.semaphoreci.com/projects/quote-and-join)
+[![Test Status](https://img.shields.io/github/workflow/status/jfgiraud/quote-and-join/QAJ Functional Tests/main?label=Test%20Status)](https://github.com/jfgiraud/quote-and-join/actions)
+[![Test Status](https://img.shields.io/github/workflow/status/jfgiraud/quote-and-join/UQAJ Functional Tests/main?label=Test%20Status)](https://github.com/jfgiraud/quote-and-join/actions)
 
 quote and join utilities
 ==========================

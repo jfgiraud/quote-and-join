@@ -1,0 +1,9 @@
+name: QAJ Functional Tests
+on: [push]
+jobs:
+  Functional-Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: tests
+        run: make qaj_test
