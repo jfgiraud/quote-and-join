@@ -17,11 +17,10 @@ Quote and join words or lines in FILE(s) to standard output.
 With no FILE, or when FILE is -, read standard input.
 
 *-a* _<string>_
-
     quote the left of word or line with the given string
 
 *-A* _<string>_
-    append string to the left on the final result
+        append string to the left on the final result
 
 *-b* _<string>_
     quote the right of word or line with the given string
