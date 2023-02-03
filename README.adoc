@@ -1,3 +1,14 @@
-= Mon manuel
+= Quote And Join Utilities
+
+== qaj
+
+quote and join words or lines in files
 
 include::doc/qaj.adoc[]
+
+== uqaj
+
+split and unquote words in files
+
+include::doc/uqaj.adoc[]
+
