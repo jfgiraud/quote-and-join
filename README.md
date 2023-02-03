@@ -1,3 +1,5 @@
+[![Build Status](https://jfgiraud.semaphoreci.com/badges/quote-and-join/branches/master.svg?style=shields&key=015394cb-66b2-4bdb-a856-528bb60c860d)](https://jfgiraud.semaphoreci.com/projects/quote-and-join)
+
 quote and join utilities
 ==========================
 

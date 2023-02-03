@@ -1,0 +1,8 @@
+name: Quote And Join
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  Functional-Tests-QAJ:
+    runs-on: ubuntu-latest
+    steps:
+      - run: make test
