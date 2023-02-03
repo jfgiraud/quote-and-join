@@ -12,19 +12,42 @@ qaj - qaj is a small utility to quote and join words or lines in files.
 
 == DESCRIPTION
 
-=== FILE
-
 Quote and join words or lines in FILE(s) to standard output.
 
 With no FILE, or when FILE is -, read standard input.
 
-=== OPTION
+*-a* _<string>_
+    quote the left of word or line with the given string
 
-Item selector:
-    *-w*   word
-    *-l*   line
+*-A* _<string>_
+    append string to the left on the final result
 
-Quote:
+*-b* _<string>_
+    quote the right of word or line with the given string
+
+*-B* _<string>_
+    append string to the right on the final result
+
+*-c* _<string>_
+    quote the left and right of word or line with the given string
+
+*-C* _<string>_
+    append string to the left+right on the final result
+
+*-e*
+    do not escape parentheses in item
+
+*-j*  _<string>_
+    join with the given string
+
+*-J*
+    join with the , character
+
+*-l*
+    select lines
+
+*-p* _<parenthese>_
+    quote the left and right of word or line with the given parenthese and its opposite parenthese
 
 *-q*
     quote the left and right of word or line with the character '
@@ -32,42 +55,21 @@ Quote:
 *-qq*
     quote the left and right of word or line with the character "
 
-*-a* _<string>_
-    quote the left of word or line with the given string
+*-s*
+    sort
 
-*-b* _<string>_
-    quote the right of word or line with the given string
-
-*-c* _<string>_
-    quote the left and right of word or line with the given string
-
-*-p* _<parenthese>_
+*-S*
+    sort in reverse order
 
 *-t*
     do not trim item
 
-*-e*
-    do not escape parentheses in item
+*-u*
+    remove duplicate items (implies -s or -S option)
 
-Sort:
-    *-s*
-        sort
-    *-S*
-        sort in reverse order
-    *-u*
-        remove duplicate items (implies -s or -S option)
+*-w*
+    select words
 
-Join delimiter:
-    *-j*  _<string>_
-    *-J*  [ie , ]
-
-After the process of quoting, sorting and/or jointing:
-    *-A* _<string>_
-        append string to the left on the final result
-    *-B* _<string>_
-        append string to the right on the final result
-    *-C* _<string>_
-        append string to the left+right on the final result
 
 
 == EXAMPLES
