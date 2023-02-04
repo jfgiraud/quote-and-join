@@ -108,7 +108,7 @@ $ echo lorem ipsum dolores est | qaj -w -q -j,
 'lorem','ipsum','dolores','est'
 ....
 
-Quote words with «"» and join with «, »
+Quote words with «"» and join with «,{nbsp}»
 
 ....
 $ echo lorem ipsum dolores est | qaj -w -qq -j', '
