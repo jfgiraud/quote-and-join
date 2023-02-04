@@ -17,26 +17,43 @@ qaj - quote and join words or lines in files
 
 == DESCRIPTION
 
-qaj is a small utility which permits to extract items (words or lines) in files, apply a quote on items and then join
-the quoted items.
+qaj is a small utility which permits to:
+
+* select and sort items (words or lines) in files
+* prefix and/or suffix items
+* join the prefixed/suffixed items
+* prefix and/or suffix the final result.
+
+By default, the line selector is used and the items are trimmed.
+
+With no FILE, or when FILE is -, read standard input.
 
 == OPTIONS
 
-=== Item selector
+=== Select and sort items
 
 *-w*::
-    Select words.
+Select words.
 
 *-l*::
-    Select lines.
+Select lines.
 
-=== Quote items
+*-s*::
+Sort items in lexicographic order.
+
+*-S*::
+Sort items in reverse lexicographic order.
+
+*-u*::
+Remove duplicate items (implies *-s* or *-S* option).
+
+=== Prefix and/or suffix items
 
 *-q*::
-Quote items with the character ' (left & right).
+Quote items with the character '.
 
 *-qq*::
-Quote items with the character " (left & right).
+Quote items with the character ".
 
 *-a* _string_::
 Prefix each items with the given string.
@@ -48,8 +65,8 @@ Suffix each items with the given string.
 Prefix and suffix each items with the given string.
 
 *-p* _string_::
-The given parenthese must be <, {, ( or [. Prefix each items with the given string. Uses the associated closing parenthese to
-suffix each items.
+The given parenthese must be <, {, ( or [. Prefix each items with the given string. Suffix each items with the associated
+closing parenthese of the given parenthese.
 
 *-t*::
 Do not trim item.
@@ -57,66 +74,91 @@ Do not trim item.
 *-e*::
 Do not escape parentheses in item.
 
-Sort:
-    -s  sort
--S  sort in reverse order
--u  remove duplicate items (implies -s or -S option)
+=== Join the prefixed/suffixed items
 
-Join delimiter:
-    -j  <string>
-    -J  [ie , ]
+*-j* _string_::
+Use the given string to join quoted items.
+
+*-J*::
+Use the character , to join quoted items.
+
+=== Prefix and/or suffix the final result
 
 After the process of quoting, sorting and/or jointing:
-    -A <string>        append string to the left on the final result
--B <string>        append string to the right on the final result
--C <string>        append string to the left+right on the final result
--P <parenthese>    append parentheses to the left+right on the final result
-the specified parenthese is the opening parenthese (<, {, ( or [)
-    the right parenthese will be the closing parenthese
 
-    FILE:
+*-A* _string_::
+Prefix the result with the given string.
 
-        With no FILE, or when FILE is -, read standard input.
+*-B* _string_::
+Suffix the result with the given string.
+
+*-C* _string_::
+Prefix and suffix the result with the given string.
+
+*-P* _string_::
+The given parenthese must be <, {, ( or [. Prefix the result with the given parenthese and suffix the result with
+the associated closing parenthese.
 
 == EXAMPLES
 
-```example 1
+Quote words with «'» and join with «,»
+
+....
 $ echo lorem ipsum dolores est | qaj -w -q -j,
 'lorem','ipsum','dolores','est'
-```
+....
 
-```example 2
+Quote words with «"» and join with «, »
+
+....
 $ echo lorem ipsum dolores est | qaj -w -qq -j', '
 "lorem", "ipsum", "dolores", "est"
-```
+....
 
-```example 3
+Prefix words with «<», suffix words with «>» and join with «#»
+
+....
 $ echo lorem ipsum dolores est | qaj -w -a'<' -b'>' -j# 
 <lorem>#<ipsum>#<dolores>#<est>
-```
+....
 
-```example 4
+Extract words
+
+....
 $ echo lorem ipsum dolores est | qaj -w
 lorem
 ipsum
 dolores
 est
-```
+....
 
-```example 5
-$ echo lorem ipsum dolores est | qaj -w -p'<' -j# 
+Prefix words with «<», suffix words with the associated parenthese «>» and join with «#»
+
+....
+$ echo lorem ipsum dolores est | qaj -w -p'<' -j#
 <lorem>#<ipsum>#<dolores>#<est>
-```
+....
 
-```example 6
+Quote lines with «"» and join with «,», lines are trimmed.
+
+....
 $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j, 
 "lorem","ipsum","dolores","est"
-```
+....
 
-```example 7
-$ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -J 
-"lorem", "ipsum", "dolores", "est"
-```
+Quote lines with «"» and join with «,», lines are not trimmed.
+
+....
+$ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -J -t
+"lorem", "ipsum", " dolores", "est"
+....
+
+Quote lines with «"» and join with «,», lines are trimmed. Add a prefix and suffix on the final result.
+
+....
+$ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j, -A 'Final result: ' -B '.'
+Final result: "lorem","ipsum","dolores","est".
+....
 
 ifdef::backend-manpage[]
 include::author.adoc[]

@@ -114,13 +114,13 @@ join='\n'
 while getopts ":qlwthj:Ja:b:c:p:P:A:B:C:usSue" o
 do  
 	  case "$o" in
-		    h)
+        h)
             usage
             ;;
-	    	l)
+        l)
             what='l'
             ;;
-	    	w)
+        w)
             what='w'
             strip=1
             ;;
