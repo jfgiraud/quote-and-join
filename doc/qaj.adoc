@@ -1,10 +1,15 @@
 ifdef::backend-manpage[]
 = qaj(1)
+:doctype: manpage
+:man manual: User commands
+:man source: quote-and-join {release-version}
+:page-layout: base
+:command: qaj
 
 == Name
 endif::[]
 
-qaj - qaj is a small utility to quote and join words or lines in files.
+qaj - quote and join words or lines in files
 
 == SYNOPSIS
 
@@ -12,65 +17,66 @@ qaj - qaj is a small utility to quote and join words or lines in files.
 
 == DESCRIPTION
 
-Quote and join words or lines in FILE(s) to standard output.
+qaj is a small utility which permits to extract items (words or lines) in files, apply a quote on items and then join
+the quoted items.
 
-With no FILE, or when FILE is -, read standard input.
+== OPTIONS
 
-*-a* _STRING_::
-    quote the left of word or line with the given string
-
-*-A* _STRING_::
-        append string to the left on the final result
-
-*-b* _STRING_::
-    quote the right of word or line with the given string
-
-*-B* _STRING_::
-    append string to the right on the final result
-
-*-c* _STRING_::
-    quote the left and right of word or line with the given string
-
-*-C* _STRING_::
-    append string to the left+right on the final result
-
-*-e*::
-    do not escape parentheses in item
-
-*-j*  _STRING_::
-    join with the given string
-
-*-J*::
-    join with the , character
-
-*-l*::
-    select lines
-
-*-p* _<parenthese>_::
-    quote the left and right of word or line with the given parenthese and its opposite parenthese
-
-*-q*::
-    quote the left and right of word or line with the character '
-
-*-qq*::
-    quote the left and right of word or line with the character "
-
-*-s*::
-    sort
-
-*-S*::
-    sort in reverse order
-
-*-t*::
-    do not trim item
-
-*-u*::
-    remove duplicate items (implies -s or -S option)
+=== Item selector
 
 *-w*::
-    select words
+    Select words.
 
+*-l*::
+    Select lines.
 
+=== Quote items
+
+*-q*::
+Quote items with the character ' (left & right).
+
+*-qq*::
+Quote items with the character " (left & right).
+
+*-a* _string_::
+Prefix each items with the given string.
+
+*-b* _string_::
+Suffix each items with the given string.
+
+*-c* _string_::
+Prefix and suffix each items with the given string.
+
+*-p* _string_::
+The given parenthese must be <, {, ( or [. Prefix each items with the given string. Uses the associated closing parenthese to
+suffix each items.
+
+*-t*::
+Do not trim item.
+
+*-e*::
+Do not escape parentheses in item.
+
+Sort:
+    -s  sort
+-S  sort in reverse order
+-u  remove duplicate items (implies -s or -S option)
+
+Join delimiter:
+    -j  <string>
+    -J  [ie , ]
+
+After the process of quoting, sorting and/or jointing:
+    -A <string>        append string to the left on the final result
+-B <string>        append string to the right on the final result
+-C <string>        append string to the left+right on the final result
+-P <parenthese>    append parentheses to the left+right on the final result
+the specified parenthese is the opening parenthese (<, {, ( or [)
+    the right parenthese will be the closing parenthese
+
+    FILE:
+
+        With no FILE, or when FILE is -, read standard input.
 
 == EXAMPLES
 
@@ -113,12 +119,6 @@ $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -J
 ```
 
 ifdef::backend-manpage[]
-== AUTHOR
-
-Written by Jean-François Giraud.
-
-== COPYRIGHT
-
-Copyright © 2020 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
-This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
+include::author.adoc[]
+include::copyright.adoc[]
 endif::[]
