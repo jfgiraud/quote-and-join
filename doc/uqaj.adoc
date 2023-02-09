@@ -17,7 +17,7 @@ uqaj - split and unquote lines in files
 
 Split and unquote lines in files
 
-With no FILE, or when FILE is -, read standard input.
+With no FILE, or when FILE is `-`, read standard input.
 
 == OPTIONS
 
@@ -39,7 +39,7 @@ Remove suffix specified by string
 Remove prefix and suffix specified by string
 
 *-p* _string_::
-The given string must be `<`, `{`, `( `or `[`. Remove the given parenthese and associated closing parenthese of each items.
+The given string must be `<`, `{`, `(` or `[`. Remove the given parenthese and associated closing parenthese of each items.
 
 === Splitting
 
@@ -49,7 +49,7 @@ Split using the given string
 *-J*::
 Split using the character `,`
 
-=== Before the process of splitting and unquoting:
+=== Before the process of splitting and unquoting
 
 *-A* _string_::
 Remove prefix specified by string
@@ -61,7 +61,7 @@ Remove suffix specified by string
 Remove prefix and suffix specified by string
 
 *-P* _string_::
-Remove prefix (parenthese is `<`, `{`, `( `or `[`) and suffix (associated parenthese).
+Remove prefix (parenthese is `<`, `{`, `(` or `[`) and suffix (associated parenthese).
 
 == EXAMPLES
 

@@ -1,67 +1,91 @@
 #!/bin/bash
 
 usage() {
-	cat <<-EOF
+    (cat <<-EOF
+#BEGIN_DO_NOT_MODIFY:make update-doc
+UQAJ(1)                                                                 User commands                                                                UQAJ(1)
+
 NAME
+       uqaj - split and unquote lines in files
 
-    ${0##*/} - split and unquote lines in files
-
-SYNOPSYS
-
-    ${0##*/} [OPTION]... [FILE]...
+SYNOPSIS
+       uqaj [OPTION]... [FILE]...
 
 DESCRIPTION
+       Split and unquote lines in files
 
-    OPTION:
+       With no FILE, or when FILE is -, read standard input.
 
-        Unquoting:
-            -q  [ie ']         (left+right)
-            -qq [ie "]         (left+right)
-            -a  <string>       (left)
-            -b  <string>       (right)
-            -c  <string>       (left+right)
-            -p  <parenthese>   (left+right) where parenthese must be <, {, ( or [
-                                right parenthese will be the closing parenthese
+OPTIONS
+   Unquoting
+       -q
+           Unquote items with the character '
 
-        Splitting:
-            -j  <string>
-            -J  [ie , ]
+       -qq
+           Unquote items with the character "
 
-        Before the process of splitting and unquoting:
-            -A <string>        remove string to the left
-            -B <string>        remove string to the right
-            -C <string>        remove string to the left+right
-            -P <parenthese>    remove parentheses to the left+right
-                               the specified parenthese is the opening parenthese (<, {, ( or [)
-                               the right parenthese will be the closing parenthese
+       -a string
+           Remove prefix specified by string
 
-    FILE:
+       -b string
+           Remove suffix specified by string
 
-        With no FILE, or when FILE is -, read standard input.
+       -c string
+           Remove prefix and suffix specified by string
+
+       -p string
+           The given string must be <, {, ( or [. Remove the given parenthese and associated closing parenthese of each items.
+
+   Splitting
+       -j string
+           Split using the given string
+
+       -J
+           Split using the character ,
+
+   Before the process of splitting and unquoting
+       -A string
+           Remove prefix specified by string
+
+       -B string
+           Remove suffix specified by string
+
+       -C string
+           Remove prefix and suffix specified by string
+
+       -P string
+           Remove prefix (parenthese is <, {, ( or [) and suffix (associated parenthese).
 
 EXAMPLES
+       Remove prefix before, remove suffix after, split using ,, unquote using {}
 
-    $ s="before{first item},{second  item},{third item}after"
-    $ echo $s | ./uqaj -j, -p'{' -A before -B after
-    first item
-    second item
-    third item
+           $ s="before{first item},{second  item},{third item}after"
+           $ echo $s | ./uqaj -j, -p'{' -A before -B after
+           first item
+           second item
+           third item
 
-    $ s='<"lorem", "ipsum", "dolores", "est">'
-    $ echo $s | ./uqaj -J -A '<' -B '>' -qq
-    lorem
-    ipsum
-    dolores
-    est
+       Remove prefix <, remove suffix >, split using , , unquote using "
+
+           $ s='<"lorem", "ipsum", "dolores", "est">'
+           $ echo $s | ./uqaj -J -A '<' -B '>' -qq
+           lorem
+           ipsum
+           dolores
+           est
 
 AUTHOR
-	Written by Jean-François Giraud.
+       Written by Jean-François Giraud.
 
 COPYRIGHT
-	Copyright © 2020 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
-	This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
+       Copyright  © 2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are
+       free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law.
 
+quote-and-join 0.0.11                                                    2023-02-09                                                                  UQAJ(1)
+#END_DO_NOT_MODIFY:make update-doc
 EOF
+) | tail -n +4 | head -n -9
+    exit 0
 }
 
 qchar=''

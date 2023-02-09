@@ -2,12 +2,12 @@
 .\"     Title: uqaj
 .\"    Author: [see the "AUTHORS" section]
 .\" Generator: Asciidoctor 1.5.5
-.\"      Date: 2023-02-08
+.\"      Date: 2023-02-09
 .\"    Manual: User commands
-.\"    Source: quote-and-join 0.0.10
+.\"    Source: quote-and-join 0.0.11
 .\"  Language: English
 .\"
-.TH "UQAJ" "1" "2023-02-08" "quote\-and\-join 0.0.10" "User commands"
+.TH "UQAJ" "1" "2023-02-09" "quote\-and\-join 0.0.11" "User commands"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -27,7 +27,7 @@ uqaj \- split and unquote lines in files
 .sp
 Split and unquote lines in files
 .sp
-With no FILE, or when FILE is \-, read standard input.
+With no FILE, or when FILE is \f[CR]\-\fP, read standard input.
 .SH "OPTIONS"
 .SS "Unquoting"
 .sp
@@ -58,7 +58,7 @@ Remove prefix and suffix specified by string
 .sp
 \fB\-p\fP \fIstring\fP
 .RS 4
-The given string must be \f[CR]<\fP, \f[CR]{\fP, \f[CR]( `or `[\fP. Remove the given parenthese and associated closing parenthese of each items.
+The given string must be \f[CR]<\fP, \f[CR]{\fP, \f[CR](\fP or \f[CR][\fP. Remove the given parenthese and associated closing parenthese of each items.
 .RE
 .SS "Splitting"
 .sp
@@ -71,7 +71,7 @@ Split using the given string
 .RS 4
 Split using the character \f[CR],\fP
 .RE
-.SS "Before the process of splitting and unquoting:"
+.SS "Before the process of splitting and unquoting"
 .sp
 \fB\-A\fP \fIstring\fP
 .RS 4
@@ -90,7 +90,7 @@ Remove prefix and suffix specified by string
 .sp
 \fB\-P\fP \fIstring\fP
 .RS 4
-Remove prefix (parenthese is \f[CR]<\fP, \f[CR]{\fP, \f[CR]( `or `[\fP) and suffix (associated parenthese).
+Remove prefix (parenthese is \f[CR]<\fP, \f[CR]{\fP, \f[CR](\fP or \f[CR][\fP) and suffix (associated parenthese).
 .RE
 .SH "EXAMPLES"
 .sp

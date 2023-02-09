@@ -24,7 +24,7 @@ qaj is a small utility to:
 
 By default, the line selector is used and the items are trimmed.
 
-With no FILE, or when FILE is -, read standard input.
+With no FILE, or when FILE is `-`, read standard input.
 
 == OPTIONS
 
