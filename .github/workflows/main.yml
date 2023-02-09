@@ -21,3 +21,4 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "quote-and-join.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
