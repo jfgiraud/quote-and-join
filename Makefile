@@ -5,14 +5,21 @@ SHELL=bash
 usage:
 	@cat - <<EOF
 		Targets:
-		* test: run all tests
 		* install: install scripts in /usr/local/bin
 		* uninstall: remove scripts from /usr/local/bin
+		* test: run all tests
+		* install-asciidoctor: install asciidoctor (you must call this target with sudo)
 	EOF
 
+.PHONY: install-asciidoctor
+install-asciidoctor:
+	apt install asciidoctor
+
+/usr/bin/asciidoctor:
+	make install-asciidoctor
 
 .PHONY: update-doc
-update-doc: doc/qaj.adoc doc/uqaj.adoc
+update-doc: doc/qaj.adoc doc/uqaj.adoc /usr/bin/asciidoctor
 	VERSION=v0.0.1
 	asciidoctor -b manpage doc/qaj.adoc -o doc/man/man1/qaj.1
 	awk -i inplace -v version=$$VERSION '/{release\\?-version}/{gsub(/{release\\?-version}/,version,$$0)} 1' doc/man/man1/qaj.1
