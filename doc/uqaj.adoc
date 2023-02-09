@@ -1,0 +1,96 @@
+= uqaj(1)
+:doctype: manpage
+:man manual: User commands
+:man source: quote-and-join {release-version}
+:page-layout: base
+:command: uqaj
+
+== NAME
+
+uqaj - split and unquote lines in files
+
+== SYNOPSIS
+
+*uqaj* [_OPTION_]... [_FILE_]...
+
+== DESCRIPTION
+
+Split and unquote lines in files
+
+With no FILE, or when FILE is -, read standard input.
+
+== OPTIONS
+
+=== Unquoting
+
+*-q*::
+Unquote items with the character `'`
+
+*-qq*::
+Unquote items with the character `"`
+
+*-a* _string_::
+Remove prefix specified by string
+
+*-b* _string_::
+Remove suffix specified by string
+
+*-c* _string_::
+Remove prefix and suffix specified by string
+
+*-p* _string_::
+The given string must be `<`, `{`, `( `or `[`. Remove the given parenthese and associated closing parenthese of each items.
+
+=== Splitting
+
+*-j* _string_::
+Split using the given string
+
+*-J*::
+Split using the character `,`
+
+=== Before the process of splitting and unquoting:
+
+*-A* _string_::
+Remove prefix specified by string
+
+*-B* _string_::
+Remove suffix specified by string
+
+*-C* _string_::
+Remove prefix and suffix specified by string
+
+*-P* _string_::
+Remove prefix (parenthese is `<`, `{`, `( `or `[`) and suffix (associated parenthese).
+
+== EXAMPLES
+
+.Remove prefix `before`, remove suffix `after`, split using `,`, unquote using `{}`
+....
+$ s="before{first item},{second  item},{third item}after"
+$ echo $s | ./uqaj -j, -p'{' -A before -B after
+first item
+second item
+third item
+....
+
+.Remove prefix `<`, remove suffix `>`, split using `,{nbsp}`, unquote using `"`
+....
+$ s='<"lorem", "ipsum", "dolores", "est">'
+$ echo $s | ./uqaj -J -A '<' -B '>' -qq
+lorem
+ipsum
+dolores
+est
+....
+
+ifdef::backend-manpage[]
+== AUTHOR
+
+Written by Jean-François Giraud.
+
+== COPYRIGHT
+
+Copyright (C) 2020 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
+endif::[]

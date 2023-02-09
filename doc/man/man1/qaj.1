@@ -1,0 +1,304 @@
+'\" t
+.\"     Title: qaj
+.\"    Author: [see the "AUTHORS" section]
+.\" Generator: Asciidoctor 1.5.5
+.\"      Date: 2023-02-08
+.\"    Manual: User commands
+.\"    Source: quote-and-join 1.0
+.\"  Language: English
+.\"
+.TH "QAJ" "1" "2023-02-08" "quote\-and\-join 1.0" "User commands"
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.ss \n[.ss] 0
+.nh
+.ad l
+.de URL
+\\$2 \(laURL: \\$1 \(ra\\$3
+..
+.if \n[.g] .mso www.tmac
+.LINKSTYLE blue R < >
+.SH "NAME"
+qaj \- quote and join words or lines in files
+.SH "SYNOPSIS"
+.sp
+\fBqaj\fP [\fIOPTION\fP]... [\fIFILE\fP]...
+.SH "DESCRIPTION"
+.sp
+qaj is a small utility to:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+select and sort items (words or lines) in files
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+prefix and/or suffix items
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+join the prefixed/suffixed items
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+prefix and/or suffix the final result.
+.RE
+.sp
+By default, the line selector is used and the items are trimmed.
+.sp
+With no FILE, or when FILE is \-, read standard input.
+.SH "OPTIONS"
+.SS "Select and sort items"
+.sp
+\fB\-w\fP
+.RS 4
+Select words.
+.RE
+.sp
+\fB\-l\fP
+.RS 4
+Select lines.
+.RE
+.sp
+\fB\-s\fP
+.RS 4
+Sort items in lexicographic order.
+.RE
+.sp
+\fB\-S\fP
+.RS 4
+Sort items in reverse lexicographic order.
+.RE
+.sp
+\fB\-u\fP
+.RS 4
+Remove duplicate items (implies \fB\-s\fP or \fB\-S\fP option).
+.RE
+.SS "Prefix and/or suffix items"
+.sp
+\fB\-q\fP
+.RS 4
+Quote items with the character \f[CR]\(aq\fP.
+.RE
+.sp
+\fB\-qq\fP
+.RS 4
+Quote items with the character \f[CR]"\fP.
+.RE
+.sp
+\fB\-a\fP \fIstring\fP
+.RS 4
+Prefix each items with the given string.
+.RE
+.sp
+\fB\-b\fP \fIstring\fP
+.RS 4
+Suffix each items with the given string.
+.RE
+.sp
+\fB\-c\fP \fIstring\fP
+.RS 4
+Prefix and suffix each items with the given string.
+.RE
+.sp
+\fB\-p\fP \fIstring\fP
+.RS 4
+The given string must be \f[CR]<\fP, \f[CR]{\fP, \f[CR](\fP or \f[CR][\fP. Prefix each items with the given string. Suffix each items with the associated
+closing parenthese of the given parenthese.
+.RE
+.sp
+\fB\-t\fP
+.RS 4
+Do not trim item.
+.RE
+.sp
+\fB\-e\fP
+.RS 4
+Do not escape parentheses in item.
+.RE
+.SS "Join the prefixed/suffixed items"
+.sp
+\fB\-j\fP \fIstring\fP
+.RS 4
+Use the given string to join quoted items.
+.RE
+.sp
+\fB\-J\fP
+.RS 4
+Use the character \f[CR],\fP to join quoted items.
+.RE
+.SS "Prefix and/or suffix the final result"
+.sp
+After the process of quoting, sorting and/or jointing:
+.sp
+\fB\-A\fP \fIstring\fP
+.RS 4
+Prefix the result with the given string.
+.RE
+.sp
+\fB\-B\fP \fIstring\fP
+.RS 4
+Suffix the result with the given string.
+.RE
+.sp
+\fB\-C\fP \fIstring\fP
+.RS 4
+Prefix and suffix the result with the given string.
+.RE
+.sp
+\fB\-P\fP \fIstring\fP
+.RS 4
+The given parenthese must be \f[CR]<\fP, \f[CR]{\fP, \f[CR](\fP or \f[CR][\fP. Prefix the result with the given parenthese and suffix the result with
+the associated closing parenthese.
+.RE
+.SH "EXAMPLES"
+.sp
+.B Quote words with \f[CR]\(aq\fP and join with \f[CR],\fP
+.br
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ echo lorem ipsum dolores est | qaj \-w \-q \-j,
+\(aqlorem\(aq,\(aqipsum\(aq,\(aqdolores\(aq,\(aqest\(aq
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.B Quote words with \f[CR]"\fP and join with \f[CR],\~\fP (comma + space)
+.br
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ echo lorem ipsum dolores est | qaj \-w \-qq \-j\(aq, \(aq
+"lorem", "ipsum", "dolores", "est"
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.B Prefix words with \f[CR]<\fP, suffix words with \f[CR]>\fP and join with \f[CR]#\fP
+.br
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ echo lorem ipsum dolores est | qaj \-w \-a\(aq<\(aq \-b\(aq>\(aq \-j#
+<lorem>#<ipsum>#<dolores>#<est>
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.B Extract words
+.br
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ echo lorem ipsum dolores est | qaj \-w
+lorem
+ipsum
+dolores
+est
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.B Prefix words with \f[CR]<\fP, suffix words with the associated parenthese \f[CR]>\fP and join with \f[CR]#\fP
+.br
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ echo lorem ipsum dolores est | qaj \-w \-p\(aq<\(aq \-j#
+<lorem>#<ipsum>#<dolores>#<est>
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.B Quote lines with \f[CR]"\fP and join with \f[CR],\fP. Lines are trimmed.
+.br
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ printf "lorem\(rsnipsum\(rsn dolores\(rsn\(rsnest" | qaj \-qq \-j,
+"lorem","ipsum","dolores","est"
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.B Quote lines with \f[CR]"\fP and join with \f[CR],\fP. Lines are not trimmed.
+.br
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ printf "lorem\(rsnipsum\(rsn dolores\(rsn\(rsnest" | qaj \-qq \-J \-t
+"lorem", "ipsum", " dolores", "est"
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.B Quote lines with \f[CR]"\fP and join with \f[CR],\fP. Lines are trimmed. Add a prefix and suffix on the final result.
+.br
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ printf "lorem\(rsnipsum\(rsn dolores\(rsn\(rsnest" | qaj \-qq \-j, \-A \(aqFinal result: \(aq \-B \(aq.\(aq
+Final result: "lorem","ipsum","dolores","est".
+.fi
+.if n \{\
+.RE
+.\}
+.SH "AUTHOR"
+.sp
+Written by Jean\-François Giraud.
+.SH "COPYRIGHT"
+.sp
+Copyright \(co 2020 Jean\-François Giraud.  License GPLv3+: GNU GPL version 3 or later \c
+.URL "http://gnu.org/licenses/gpl.html" "" "."
+This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.

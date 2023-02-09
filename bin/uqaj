@@ -83,47 +83,47 @@ do
 		h)
 		    usage
 		    ;;
-    j)
-        join="$OPTARG"
-        ;;
-    J)
-        join=", "
-        ;;
-    p)
-        if [[ "$OPTARG" == '<' ]]; then
-            right=">"
-		    elif [[ "$OPTARG" == '(' ]]; then
-		        right=")"
-		    elif [[ "$OPTARG" == '{' ]]; then
-		        right="}"
-		    elif [[ "$OPTARG" == '[' ]]; then
-		        right="]"
-		    else
-		        error 1 "Invalid paren!"
-        fi
-		    left="$OPTARG"
-		    ;;
-    P)
-        if [[ "$OPTARG" == '<' ]]; then
-            after=">"
-		    elif [[ "$OPTARG" == '(' ]]; then
-		        after=")"
-		    elif [[ "$OPTARG" == '{' ]]; then
-		        after="}"
-		    elif [[ "$OPTARG" == '[' ]]; then
-		        after="]"
-		    else
-		        error 1 "Invalid paren!"
-        fi
-		    before="$OPTARG"
-		    ;;
+        j)
+            join="$OPTARG"
+            ;;
+        J)
+            join=", "
+            ;;
+        p)
+            if [[ "$OPTARG" == '<' ]]; then
+                right=">"
+                elif [[ "$OPTARG" == '(' ]]; then
+                    right=")"
+                elif [[ "$OPTARG" == '{' ]]; then
+                    right="}"
+                elif [[ "$OPTARG" == '[' ]]; then
+                    right="]"
+                else
+                    error 1 "Invalid paren!"
+            fi
+                left="$OPTARG"
+                ;;
+        P)
+            if [[ "$OPTARG" == '<' ]]; then
+                after=">"
+                elif [[ "$OPTARG" == '(' ]]; then
+                    after=")"
+                elif [[ "$OPTARG" == '{' ]]; then
+                    after="}"
+                elif [[ "$OPTARG" == '[' ]]; then
+                    after="]"
+                else
+                    error 1 "Invalid paren!"
+            fi
+                before="$OPTARG"
+                ;;
 		q)
-        if [[ -z "$qchar" ]]; then
-            qchar="'"
-		    else
-            qchar='"'
-		    fi
-		    ;;
+            if [[ -z "$qchar" ]]; then
+                qchar="'"
+                else
+                qchar='"'
+                fi
+                ;;
 		a)
 		    left="$OPTARG"
 		    ;;
@@ -133,7 +133,7 @@ do
 		B)
 		    after="$OPTARG"
 		    ;;
-    ?) error 1 $"invalid option -- '$OPTARG'";;
+        ?) error 1 $"invalid option -- '$OPTARG'";;
 	esac
 done
 

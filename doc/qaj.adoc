@@ -1,4 +1,3 @@
-ifdef::backend-manpage[]
 = qaj(1)
 :doctype: manpage
 :man manual: User commands
@@ -6,18 +5,17 @@ ifdef::backend-manpage[]
 :page-layout: base
 :command: qaj
 
-== Name
-endif::[]
+== NAME
 
 qaj - quote and join words or lines in files
 
 == SYNOPSIS
 
-*qaj* [_OPTION_]... _FILE_...
+*qaj* [_OPTION_]... [_FILE_]...
 
 == DESCRIPTION
 
-qaj is a small utility which permits to:
+qaj is a small utility to:
 
 * select and sort items (words or lines) in files
 * prefix and/or suffix items
@@ -50,10 +48,10 @@ Remove duplicate items (implies *-s* or *-S* option).
 === Prefix and/or suffix items
 
 *-q*::
-Quote items with the character '.
+Quote items with the character `'`.
 
 *-qq*::
-Quote items with the character ".
+Quote items with the character `"`.
 
 *-a* _string_::
 Prefix each items with the given string.
@@ -65,7 +63,7 @@ Suffix each items with the given string.
 Prefix and suffix each items with the given string.
 
 *-p* _string_::
-The given parenthese must be <, {, ( or [. Prefix each items with the given string. Suffix each items with the associated
+The given string must be `<`, `{`, `(` or `[`. Prefix each items with the given string. Suffix each items with the associated
 closing parenthese of the given parenthese.
 
 *-t*::
@@ -80,7 +78,7 @@ Do not escape parentheses in item.
 Use the given string to join quoted items.
 
 *-J*::
-Use the character , to join quoted items.
+Use the character `,` to join quoted items.
 
 === Prefix and/or suffix the final result
 
@@ -96,34 +94,30 @@ Suffix the result with the given string.
 Prefix and suffix the result with the given string.
 
 *-P* _string_::
-The given parenthese must be <, {, ( or [. Prefix the result with the given parenthese and suffix the result with
+The given parenthese must be `<`, `{`, `(` or `[`. Prefix the result with the given parenthese and suffix the result with
 the associated closing parenthese.
 
 == EXAMPLES
 
-Quote words with «'» and join with «,»
-
+.Quote words with `'` and join with `,`
 ....
 $ echo lorem ipsum dolores est | qaj -w -q -j,
 'lorem','ipsum','dolores','est'
 ....
 
-Quote words with «"» and join with «,{nbsp}»
-
+.Quote words with `"` and join with `,{nbsp}` (comma + space)
 ....
 $ echo lorem ipsum dolores est | qaj -w -qq -j', '
 "lorem", "ipsum", "dolores", "est"
 ....
 
-Prefix words with «<», suffix words with «>» and join with «#»
-
+.Prefix words with `<`, suffix words with `>` and join with `#`
 ....
 $ echo lorem ipsum dolores est | qaj -w -a'<' -b'>' -j# 
 <lorem>#<ipsum>#<dolores>#<est>
 ....
 
-Extract words
-
+.Extract words
 ....
 $ echo lorem ipsum dolores est | qaj -w
 lorem
@@ -132,35 +126,37 @@ dolores
 est
 ....
 
-Prefix words with «<», suffix words with the associated parenthese «>» and join with «#»
-
+.Prefix words with `<`, suffix words with the associated parenthese `>` and join with `#`
 ....
 $ echo lorem ipsum dolores est | qaj -w -p'<' -j#
 <lorem>#<ipsum>#<dolores>#<est>
 ....
 
-Quote lines with «"» and join with «,», lines are trimmed.
-
+.Quote lines with `"` and join with `,`. Lines are trimmed.
 ....
 $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j, 
 "lorem","ipsum","dolores","est"
 ....
 
-Quote lines with «"» and join with «,», lines are not trimmed.
-
+.Quote lines with `"` and join with `,`. Lines are not trimmed.
 ....
 $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -J -t
 "lorem", "ipsum", " dolores", "est"
 ....
 
-Quote lines with «"» and join with «,», lines are trimmed. Add a prefix and suffix on the final result.
-
+.Quote lines with `"` and join with `,`. Lines are trimmed. Add a prefix and suffix on the final result.
 ....
 $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j, -A 'Final result: ' -B '.'
 Final result: "lorem","ipsum","dolores","est".
 ....
 
 ifdef::backend-manpage[]
-include::author.adoc[]
-include::copyright.adoc[]
+== AUTHOR
+
+Written by Jean-François Giraud.
+
+== COPYRIGHT
+
+Copyright (C) 2020 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
 endif::[]

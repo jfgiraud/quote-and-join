@@ -1,0 +1,138 @@
+'\" t
+.\"     Title: uqaj
+.\"    Author: [see the "AUTHORS" section]
+.\" Generator: Asciidoctor 1.5.5
+.\"      Date: 2023-02-08
+.\"    Manual: User commands
+.\"    Source: quote-and-join 1.0
+.\"  Language: English
+.\"
+.TH "UQAJ" "1" "2023-02-08" "quote\-and\-join 1.0" "User commands"
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.ss \n[.ss] 0
+.nh
+.ad l
+.de URL
+\\$2 \(laURL: \\$1 \(ra\\$3
+..
+.if \n[.g] .mso www.tmac
+.LINKSTYLE blue R < >
+.SH "NAME"
+uqaj \- split and unquote lines in files
+.SH "SYNOPSIS"
+.sp
+\fBuqaj\fP [\fIOPTION\fP]... [\fIFILE\fP]...
+.SH "DESCRIPTION"
+.sp
+Split and unquote lines in files
+.sp
+With no FILE, or when FILE is \-, read standard input.
+.SH "OPTIONS"
+.SS "Unquoting"
+.sp
+\fB\-q\fP
+.RS 4
+Unquote items with the character \f[CR]\(aq\fP
+.RE
+.sp
+\fB\-qq\fP
+.RS 4
+Unquote items with the character \f[CR]"\fP
+.RE
+.sp
+\fB\-a\fP \fIstring\fP
+.RS 4
+Remove prefix specified by string
+.RE
+.sp
+\fB\-b\fP \fIstring\fP
+.RS 4
+Remove suffix specified by string
+.RE
+.sp
+\fB\-c\fP \fIstring\fP
+.RS 4
+Remove prefix and suffix specified by string
+.RE
+.sp
+\fB\-p\fP \fIstring\fP
+.RS 4
+The given string must be \f[CR]<\fP, \f[CR]{\fP, \f[CR]( `or `[\fP. Remove the given parenthese and associated closing parenthese of each items.
+.RE
+.SS "Splitting"
+.sp
+\fB\-j\fP \fIstring\fP
+.RS 4
+Split using the given string
+.RE
+.sp
+\fB\-J\fP
+.RS 4
+Split using the character \f[CR],\fP
+.RE
+.SS "Before the process of splitting and unquoting:"
+.sp
+\fB\-A\fP \fIstring\fP
+.RS 4
+Remove prefix specified by string
+.RE
+.sp
+\fB\-B\fP \fIstring\fP
+.RS 4
+Remove suffix specified by string
+.RE
+.sp
+\fB\-C\fP \fIstring\fP
+.RS 4
+Remove prefix and suffix specified by string
+.RE
+.sp
+\fB\-P\fP \fIstring\fP
+.RS 4
+Remove prefix (parenthese is \f[CR]<\fP, \f[CR]{\fP, \f[CR]( `or `[\fP) and suffix (associated parenthese).
+.RE
+.SH "EXAMPLES"
+.sp
+.B Remove prefix \f[CR]before\fP, remove suffix \f[CR]after\fP, split using \f[CR],\fP, unquote using \f[CR]{}\fP
+.br
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ s="before{first item},{second  item},{third item}after"
+$ echo $s | ./uqaj \-j, \-p\(aq{\(aq \-A before \-B after
+first item
+second item
+third item
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.B Remove prefix \f[CR]<\fP, remove suffix \f[CR]>\fP, split using \f[CR],\~\fP, unquote using \f[CR]"\fP
+.br
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ s=\(aq<"lorem", "ipsum", "dolores", "est">\(aq
+$ echo $s | ./uqaj \-J \-A \(aq<\(aq \-B \(aq>\(aq \-qq
+lorem
+ipsum
+dolores
+est
+.fi
+.if n \{\
+.RE
+.\}
+.SH "AUTHOR"
+.sp
+Written by Jean\-François Giraud.
+.SH "COPYRIGHT"
+.sp
+Copyright \(co 2020 Jean\-François Giraud.  License GPLv3+: GNU GPL version 3 or later \c
+.URL "http://gnu.org/licenses/gpl.html" "" "."
+This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.

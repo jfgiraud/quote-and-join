@@ -2,92 +2,150 @@
 
 
 usage() {
-    cat <<-EOF
+    (cat <<-EOF
+#BEGIN_DO_NOT_MODIFY:make update-doc
+QAJ(1)                                                                                          User commands                                                                                          QAJ(1)
+
 NAME
+       qaj - quote and join words or lines in files
 
-    ${0##*/} - quote and join words or lines in files
-
-SYNOPSYS
-
-    ${0##*/} [OPTION]... [FILE]...
+SYNOPSIS
+       qaj [OPTION]... [FILE]...
 
 DESCRIPTION
+       qaj is a small utility to:
 
-    OPTION:
+       ·   select and sort items (words or lines) in files
 
-        Item selector:
-             -w   word
-             -l   line
+       ·   prefix and/or suffix items
 
-        Quote:
-            -q  [ie ']         (left+right)
-            -qq [ie "]         (left+right)
-            -a  <string>       (left)
-            -b  <string>       (right)
-            -c  <string>       (left+right)
-            -p  <parenthese>   (left+right) where parenthese must be <, {, ( or [
-                               right parenthese will be the closing parenthese
-            -t   do not trim item
-            -e   do not escape parentheses in item
+       ·   join the prefixed/suffixed items
 
-        Sort:
-            -s  sort
-            -S  sort in reverse order
-            -u  remove duplicate items (implies -s or -S option)
+       ·   prefix and/or suffix the final result.
 
-        Join delimiter:
-            -j  <string>
-            -J  [ie , ]
+       By default, the line selector is used and the items are trimmed.
 
-        After the process of quoting, sorting and/or jointing:
-            -A <string>        append string to the left on the final result
-            -B <string>        append string to the right on the final result
-            -C <string>        append string to the left+right on the final result
-            -P <parenthese>    append parentheses to the left+right on the final result
-                               the specified parenthese is the opening parenthese (<, {, ( or [)
-                               the right parenthese will be the closing parenthese
+       With no FILE, or when FILE is -, read standard input.
 
-    FILE:
+OPTIONS
+   Select and sort items
+       -w
+           Select words.
 
-        With no FILE, or when FILE is -, read standard input.
+       -l
+           Select lines.
+
+       -s
+           Sort items in lexicographic order.
+
+       -S
+           Sort items in reverse lexicographic order.
+
+       -u
+           Remove duplicate items (implies -s or -S option).
+
+   Prefix and/or suffix items
+       -q
+           Quote items with the character '.
+
+       -qq
+           Quote items with the character ".
+
+       -a string
+           Prefix each items with the given string.
+
+       -b string
+           Suffix each items with the given string.
+
+       -c string
+           Prefix and suffix each items with the given string.
+
+       -p string
+           The given string must be <, {, ( or [. Prefix each items with the given string. Suffix each items with the associated closing parenthese of the given parenthese.
+
+       -t
+           Do not trim item.
+
+       -e
+           Do not escape parentheses in item.
+
+   Join the prefixed/suffixed items
+       -j string
+           Use the given string to join quoted items.
+
+       -J
+           Use the character , to join quoted items.
+
+   Prefix and/or suffix the final result
+       After the process of quoting, sorting and/or jointing:
+
+       -A string
+           Prefix the result with the given string.
+
+       -B string
+           Suffix the result with the given string.
+
+       -C string
+           Prefix and suffix the result with the given string.
+
+       -P string
+           The given parenthese must be <, {, ( or [. Prefix the result with the given parenthese and suffix the result with the associated closing parenthese.
 
 EXAMPLES
+       Quote words with ' and join with ,
 
-    $ echo lorem ipsum dolores est | ${0##*/} -w -q -j,
-    'lorem','ipsum','dolores','est'
+           $ echo lorem ipsum dolores est | qaj -w -q -j,
+           'lorem','ipsum','dolores','est'
 
-    $ echo lorem ipsum dolores est | ${0##*/} -w -qq -j', '
-    "lorem", "ipsum", "dolores", "est"
+       Quote words with " and join with ,  (comma + space)
 
-    $ echo lorem ipsum dolores est | ${0##*/} -w -a'<' -b'>' -j#
-    <lorem>#<ipsum>#<dolores>#<est>
+           $ echo lorem ipsum dolores est | qaj -w -qq -j', '
+           "lorem", "ipsum", "dolores", "est"
 
-    $ echo lorem ipsum dolores est | ${0##*/} -w
-    lorem
-    ipsum
-    dolores
-    est
+       Prefix words with <, suffix words with > and join with #
 
-    $ echo lorem ipsum dolores est | ${0##*/} -w -p'<' -j#
-    <lorem>#<ipsum>#<dolores>#<est>
+           $ echo lorem ipsum dolores est | qaj -w -a'<' -b'>' -j#
+           <lorem>#<ipsum>#<dolores>#<est>
 
-    $ printf "lorem\nipsum\n dolores\n\nest" | ${0##*/} -qq -j,
-    "lorem","ipsum","dolores","est"
+       Extract words
 
-    $ printf "lorem\nipsum\n dolores\n\nest" | ${0##*/} -qq -J
-    "lorem", "ipsum", "dolores", "est"
+           $ echo lorem ipsum dolores est | qaj -w
+           lorem
+           ipsum
+           dolores
+           est
 
-    $ printf "lorem\nipsum\n dolores\n\nest" | ${0##*/} -qq -J -A "<" -B ">"
-    <"lorem", "ipsum", "dolores", "est">
+       Prefix words with <, suffix words with the associated parenthese > and join with #
+
+           $ echo lorem ipsum dolores est | qaj -w -p'<' -j#
+           <lorem>#<ipsum>#<dolores>#<est>
+
+       Quote lines with " and join with ,. Lines are trimmed.
+
+           $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j,
+           "lorem","ipsum","dolores","est"
+
+       Quote lines with " and join with ,. Lines are not trimmed.
+
+           $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -J -t
+           "lorem", "ipsum", " dolores", "est"
+
+       Quote lines with " and join with ,. Lines are trimmed. Add a prefix and suffix on the final result.
+
+           $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j, -A 'Final result: ' -B '.'
+           Final result: "lorem","ipsum","dolores","est".
 
 AUTHOR
-	Written by Jean-François Giraud.
+       Written by Jean-François Giraud.
 
 COPYRIGHT
-	Copyright © 2020 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
-	This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
+       Copyright  ©  2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it. There is NO
+       WARRANTY, to the extent permitted by law.
 
+quote-and-join 1.0                                                                                2023-02-08                                                                                           QAJ(1)
+#END_DO_NOT_MODIFY:make update-doc
 EOF
+) | tail -n +4 | head -n -9
     exit 0
 }
 
@@ -114,93 +172,93 @@ join='\n'
 while getopts ":qlwthj:Ja:b:c:p:P:A:B:C:usSue" o
 do  
 	  case "$o" in
-        h)
-            usage
-            ;;
-        l)
-            what='l'
-            ;;
-        w)
-            what='w'
-            strip=1
-            ;;
-        j)
-            join="$OPTARG"
-            ;;
-        J)
-            join=", "
-            ;;
-        q)
-            if [[ -z "$qchar" ]]; then
-                qchar="'"
-		        else
-                qchar='"'
-            fi
-            ;;
-	    	a)
-            left="$OPTARG"
-            ;;
-        A)
-            before="$OPTARG"
-            ;;
-        t)
-            strip=0
-            ;;
-        e)
-            escape=0
-            ;;
-	    	b)
-            right="$OPTARG"
-            ;;
-	  	  B)
-            after="$OPTARG"
-            ;;
-	  	  c)
-            left="$OPTARG"
-            right="$OPTARG"
-            ;;
-	  	  C)
-            before="$OPTARG"
-            after="$OPTARG"
-            ;;
-        p)
-            if [[ "$OPTARG" == '<' ]]; then
-                right=">"
-            elif [[ "$OPTARG" == '(' ]]; then
-                right=")"
-            elif [[ "$OPTARG" == '{' ]]; then
-                right="}"
-            elif [[ "$OPTARG" == '[' ]]; then
-                right="]"
-            else
-                error 1 "Invalid paren!"
-            fi
-            left="$OPTARG"
-            ;;
-		    P)
-            if [[ "$OPTARG" == '<' ]]; then
-                after=">"
-            elif [[ "$OPTARG" == '(' ]]; then
-                after=")"
-            elif [[ "$OPTARG" == '{' ]]; then
-                after="}"
-            elif [[ "$OPTARG" == '[' ]]; then
-                after="]"
-            else
-                error 1 "Invalid paren!"
-            fi
-            before="$OPTARG"
-            ;;
-        s)
-            sortorder=""
-    		    ;;
-        S)
-            sortorder="-r"
-            ;;
-        u)
-            sortunique="-u"
-		        ;;
-        ?) error 1 $"invalid option -- '$OPTARG'";;
+            h)
+                usage
+                ;;
+            l)
+                what='l'
+                ;;
+            w)
+                what='w'
+                strip=1
+                ;;
+            j)
+                join="$OPTARG"
+                ;;
+            J)
+                join=", "
+                ;;
+            q)
+                if [[ -z "$qchar" ]]; then
+                    qchar="'"
+                    else
+                    qchar='"'
+                fi
+                ;;
+            a)
+                left="$OPTARG"
+                ;;
+            A)
+                before="$OPTARG"
+                ;;
+            t)
+                strip=0
+                ;;
+            e)
+                escape=0
+                ;;
+            b)
+                right="$OPTARG"
+                ;;
+            B)
+                after="$OPTARG"
+                ;;
+            c)
+                left="$OPTARG"
+                right="$OPTARG"
+                ;;
+            C)
+                before="$OPTARG"
+                after="$OPTARG"
+                ;;
+            p)
+                if [[ "$OPTARG" == '<' ]]; then
+                    right=">"
+                elif [[ "$OPTARG" == '(' ]]; then
+                    right=")"
+                elif [[ "$OPTARG" == '{' ]]; then
+                    right="}"
+                elif [[ "$OPTARG" == '[' ]]; then
+                    right="]"
+                else
+                    error 1 "Invalid paren!"
+                fi
+                left="$OPTARG"
+                ;;
+            P)
+                if [[ "$OPTARG" == '<' ]]; then
+                    after=">"
+                elif [[ "$OPTARG" == '(' ]]; then
+                    after=")"
+                elif [[ "$OPTARG" == '{' ]]; then
+                    after="}"
+                elif [[ "$OPTARG" == '[' ]]; then
+                    after="]"
+                else
+                    error 1 "Invalid paren!"
+                fi
+                before="$OPTARG"
+                ;;
+            s)
+                sortorder=""
+                ;;
+            S)
+                sortorder="-r"
+                ;;
+            u)
+                sortunique="-u"
+                ;;
+            ?) error 1 $"invalid option -- '$OPTARG'";;
 	  esac
 done
 
