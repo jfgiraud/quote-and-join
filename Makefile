@@ -5,10 +5,12 @@ SHELL=bash
 usage:
 	@cat - <<EOF
 		Targets:
-		* install: install scripts in /usr/local/bin
+		* install: install scripts in /usr/local/bin (you must call this target with sudo)
 		* uninstall: remove scripts from /usr/local/bin
-		* update-doc VERSION=v{X.Y.Z}: update man pages and usages
 		* test: run all tests
+		* archive: create a tgz (used in github pipeline for release)
+		* commit-release VERSION=v{X.Y.Z}: commit files and create a release
+		* update-doc VERSION=v{X.Y.Z}: update man pages and usages
 		* install-asciidoctor: install asciidoctor (you must call this target with sudo)
 	EOF
 
@@ -35,6 +37,16 @@ update-doc: doc/qaj.adoc doc/uqaj.adoc /usr/bin/asciidoctor
 	[[ -s doc/uqaj.txt ]] && awk -i inplace 'BEGIN { p = 1 } /#BEGIN_DO_NOT_MODIFY:make update-doc/{ print; p = 0; while(getline line<"doc/uqaj.txt"){print line} } /#END_DO_NOT_MODIFY:make update-doc/{ p = 1 } p' bin/uqaj
 	rm -f doc/uqaj.txt
 
+.PHONY: commit-release
+commit-release: clean update-doc
+	[[ -z $$VERSION ]] && echo "Version not set!" && exit 1
+	VERSION=$${VERSION#*v}
+	git add .
+	git commit -m "Commit for creating tag $$VERSION"
+	git tag "Create tag $$VERSION"
+	git push
+
+
 .PHONY: test
 test:
 	bash tests/qaj_tests.sh
@@ -60,6 +72,6 @@ uninstall:
 
 .PHONY: clean
 clean:
-	rm -f *.tar *.gz
+	rm -f *.tar *.gz *~
 
 
