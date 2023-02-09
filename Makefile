@@ -7,6 +7,7 @@ usage:
 		Targets:
 		* install: install scripts in /usr/local/bin
 		* uninstall: remove scripts from /usr/local/bin
+		* update-doc VERSION=v{X.Y.Z}: update man pages and usages
 		* test: run all tests
 		* install-asciidoctor: install asciidoctor (you must call this target with sudo)
 	EOF
@@ -40,19 +41,25 @@ test:
 	bash tests/uqaj_tests.sh
 
 .PHONY: install
-install: update-doc
-	cp -i bin/qaj /usr/local/bin/qaj
-	cp -i bin/uqaj /usr/local/bin/uqaj
-	cp -i doc/man/man1/qaj.1 /usr/local/man/man1/
-	cp -i doc/man/man1/uqaj.1 /usr/local/man/man1/
+install: archive
+	tar zxvf quote-and-join.tar.gz -C /usr/local/
 
 .PHONY: archive
-archive: update-doc
-	zip quote-and-join.zip doc/man/man1/*.1 bin/*qaj
+archive:
+	tar cvf quote-and-join.tar bin/*qaj
+	tar rvf quote-and-join.tar LICENSE --transform 's,^,share/doc/quote-and-join/,'
+	tar rvf quote-and-join.tar doc/man/man1/*.1 --transform 's,^doc/,,'
+	gzip -f quote-and-join.tar
 
 .PHONY: uninstall
 uninstall:
-	rm -f /usr/local/bin/qaj /usr/local/bin/uqaj
+	cd /usr/local/
+	rm -f bin/{qaj,uqaj}
+	rm -f man/man1/{qaj,uqaj}.1
+	rm -f share/doc/quote-and-join/LICENSE
 
+.PHONY: clean
+clean:
+	rm -f *.tar *.gz
 
 
