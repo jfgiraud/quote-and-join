@@ -42,8 +42,9 @@ commit-release: clean update-doc
 	[[ -z $$VERSION ]] && echo "Version not set!" && exit 1
 	VERSION=$${VERSION#*v}
 	git add .
-	git commit -m "Commit for creating tag $$VERSION"
+	git commit -m "Commit for creating tag v$$VERSION"
 	git tag "v$$VERSION"
+	git commit -m "Commit tag v$$VERSION"
 	git push
 
 
