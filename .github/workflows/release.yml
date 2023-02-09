@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
           sudo make install-asciidoctor
-          make archive
+          make archive VERSION="${{ github.ref }}"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

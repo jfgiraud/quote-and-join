@@ -16,11 +16,13 @@ install-asciidoctor:
 	apt install asciidoctor
 
 /usr/bin/asciidoctor:
-	make install-asciidoctor
+	echo "You must install asciidoctor."
+	echo "sudo make install-asciidoctor"
 
 .PHONY: update-doc
 update-doc: doc/qaj.adoc doc/uqaj.adoc /usr/bin/asciidoctor
-	VERSION=v0.0.1
+	[[ -z $$VERSION ]] && echo "Version not set!" && exit 1
+	VERSION=$${VERSION#*v}
 	asciidoctor -b manpage doc/qaj.adoc -o doc/man/man1/qaj.1
 	awk -i inplace -v version=$$VERSION '/{release\\?-version}/{gsub(/{release\\?-version}/,version,$$0)} 1' doc/man/man1/qaj.1
 	man -l doc/man/man1/qaj.1 > doc/qaj.txt
