@@ -1,4 +1,4 @@
-[![Test Status](https://img.shields.io/github/actions/workflow/status/jfgiraud/quote-and-join/main.yml?label=Tests)](https://github.com/jfgiraud/quote-and-join/actions)
+[![Test Status](https://img.shields.io/github/actions/workflow/status/jfgiraud/quote-and-join/main.yml?label=CI)](https://github.com/jfgiraud/quote-and-join/actions)
 
 quote and join utilities
 ==========================
