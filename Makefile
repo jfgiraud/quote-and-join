@@ -43,9 +43,8 @@ commit-release: clean update-doc
 	VERSION=$${VERSION#*v}
 	git add .
 	git commit -m "Commit for creating tag v$$VERSION"
-	git tag "v$$VERSION"
-	git commit -m "Commit tag v$$VERSION"
-	git push
+	git tag "v$$VERSION" -m "Tag v$$VERSION"
+	git push --tags
 
 
 .PHONY: test
