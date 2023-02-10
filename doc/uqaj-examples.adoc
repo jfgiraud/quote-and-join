@@ -1,0 +1,22 @@
+== EXAMPLES
+
+.Remove prefix `before`, remove suffix `after`, split using `,`, unquote using `{}`
+[source,shell]
+----
+$ s="before{first item},{second  item},{third item}after"
+$ echo $s | ./uqaj -j, -p'{' -A before -B after
+first item
+second item
+third item
+----
+
+.Remove prefix `<`, remove suffix `>`, split using `,{nbsp}`, unquote using `"`
+[source,shell]
+----
+$ s='<"lorem", "ipsum", "dolores", "est">'
+$ echo $s | ./uqaj -J -A '<' -B '>' -qq
+lorem
+ipsum
+dolores
+est
+----

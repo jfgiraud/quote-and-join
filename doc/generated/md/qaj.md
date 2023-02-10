@@ -1,0 +1,152 @@
+NAME
+====
+
+qaj - quote and join words or lines in files
+
+SYNOPSIS
+========
+
+**qaj** \[*OPTION*\] \[*FILE*\]
+
+DESCRIPTION
+===========
+
+qaj is a small utility to:
+
+-   select and sort items (words or lines) in files
+
+-   prefix and/or suffix items
+
+-   join the prefixed/suffixed items
+
+-   prefix and/or suffix the final result.
+
+By default, the line selector is used and the items are trimmed.
+
+With no FILE, or when FILE is `-`, read standard input.
+
+OPTIONS
+=======
+
+Select and sort items
+---------------------
+
+**-w**  
+Select words.
+
+**-l**  
+Select lines.
+
+**-s**  
+Sort items in lexicographic order.
+
+**-S**  
+Sort items in reverse lexicographic order.
+
+**-u**  
+Remove duplicate items (implies **-s** or **-S** option).
+
+Prefix and/or suffix items
+--------------------------
+
+**-q**  
+Quote items with the character `'`.
+
+**-qq**  
+Quote items with the character `"`.
+
+**-a** *string*  
+Prefix each items with the given string.
+
+**-b** *string*  
+Suffix each items with the given string.
+
+**-c** *string*  
+Prefix and suffix each items with the given string.
+
+**-p** *string*  
+The given string must be `<`, `{`, `(` or `[`. Prefix each items with
+the given string. Suffix each items with the associated closing
+parenthese of the given parenthese.
+
+**-t**  
+Do not trim item.
+
+**-e**  
+Do not escape parentheses in item.
+
+Join the prefixed/suffixed items
+--------------------------------
+
+**-j** *string*  
+Use the given string to join quoted items.
+
+**-J**  
+Use the character `,` to join quoted items.
+
+Prefix and/or suffix the final result
+-------------------------------------
+
+After the process of quoting, sorting and/or jointing:
+
+**-A** *string*  
+Prefix the result with the given string.
+
+**-B** *string*  
+Suffix the result with the given string.
+
+**-C** *string*  
+Prefix and suffix the result with the given string.
+
+**-P** *string*  
+The given parenthese must be `<`, `{`, `(` or `[`. Prefix the result
+with the given parenthese and suffix the result with the associated
+closing parenthese.
+
+EXAMPLES
+========
+
+**Quote words with `'` and join with `,`.**
+
+    $ echo lorem ipsum dolores est | qaj -w -q -j,
+    'lorem','ipsum','dolores','est'
+
+**Quote words with `"` and join with `, ` (comma + space).**
+
+    $ echo lorem ipsum dolores est | qaj -w -qq -j', '
+    "lorem", "ipsum", "dolores", "est"
+
+**Prefix words with `<`, suffix words with `>` and join with `#`.**
+
+    $ echo lorem ipsum dolores est | qaj -w -a'<' -b'>' -j#
+    <lorem>#<ipsum>#<dolores>#<est>
+
+**Extract words.**
+
+    $ echo lorem ipsum dolores est | qaj -w
+    lorem
+    ipsum
+    dolores
+    est
+
+**Prefix words with `<`, suffix words with the associated parenthese `>`
+and join with `#`.**
+
+    $ echo lorem ipsum dolores est | qaj -w -p'<' -j#
+    <lorem>#<ipsum>#<dolores>#<est>
+
+**Quote lines with `"` and join with `,`. Lines are trimmed..**
+
+    $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j,
+    "lorem","ipsum","dolores","est"
+
+**Quote lines with `"` and join with `,`. Lines are not trimmed..**
+
+    $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -J -t
+    "lorem", "ipsum", " dolores", "est"
+
+**Quote lines with `"` and join with `,`. Lines are trimmed. Add a
+prefix and suffix on the final result..**
+
+    $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j, -A 'Final result: ' -B '.'
+    Final result: "lorem","ipsum","dolores","est".

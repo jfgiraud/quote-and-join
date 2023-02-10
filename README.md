@@ -25,8 +25,11 @@ quote and join words or lines in files
 
 ## examples
 
-```
+```bash
 $ echo lorem ipsum dolores est | qaj -w -q -j,
+```
+
+```
 'lorem','ipsum','dolores','est'
 
 $ echo lorem ipsum dolores est | qaj -w -qq -j', '

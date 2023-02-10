@@ -1,17 +1,20 @@
+ifdef::backend-manpage[]
 = qaj(1)
 :doctype: manpage
+:release-version: undefined
 :man manual: User commands
 :man source: quote-and-join {release-version}
 :page-layout: base
 :command: qaj
 
+endif::[]
 == NAME
 
 qaj - quote and join words or lines in files
 
 == SYNOPSIS
 
-*qaj* [_OPTION_]... [_FILE_]...
+*qaj* [_OPTION_] [_FILE_]
 
 == DESCRIPTION
 
@@ -97,66 +100,9 @@ Prefix and suffix the result with the given string.
 The given parenthese must be `<`, `{`, `(` or `[`. Prefix the result with the given parenthese and suffix the result with
 the associated closing parenthese.
 
-== EXAMPLES
-
-.Quote words with `'` and join with `,`
-....
-$ echo lorem ipsum dolores est | qaj -w -q -j,
-'lorem','ipsum','dolores','est'
-....
-
-.Quote words with `"` and join with `,{nbsp}` (comma + space)
-....
-$ echo lorem ipsum dolores est | qaj -w -qq -j', '
-"lorem", "ipsum", "dolores", "est"
-....
-
-.Prefix words with `<`, suffix words with `>` and join with `#`
-....
-$ echo lorem ipsum dolores est | qaj -w -a'<' -b'>' -j# 
-<lorem>#<ipsum>#<dolores>#<est>
-....
-
-.Extract words
-....
-$ echo lorem ipsum dolores est | qaj -w
-lorem
-ipsum
-dolores
-est
-....
-
-.Prefix words with `<`, suffix words with the associated parenthese `>` and join with `#`
-....
-$ echo lorem ipsum dolores est | qaj -w -p'<' -j#
-<lorem>#<ipsum>#<dolores>#<est>
-....
-
-.Quote lines with `"` and join with `,`. Lines are trimmed.
-....
-$ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j, 
-"lorem","ipsum","dolores","est"
-....
-
-.Quote lines with `"` and join with `,`. Lines are not trimmed.
-....
-$ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -J -t
-"lorem", "ipsum", " dolores", "est"
-....
-
-.Quote lines with `"` and join with `,`. Lines are trimmed. Add a prefix and suffix on the final result.
-....
-$ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j, -A 'Final result: ' -B '.'
-Final result: "lorem","ipsum","dolores","est".
-....
+include::qaj-examples.adoc[]
 
 ifdef::backend-manpage[]
-== AUTHOR
-
-Written by Jean-François Giraud.
-
-== COPYRIGHT
-
-Copyright (C) 2020 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
-This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
+include::author.adoc[]
+include::copyright.adoc[]
 endif::[]

@@ -1,10 +1,13 @@
+ifdef::backend-manpage[]
 = uqaj(1)
 :doctype: manpage
+:release-version: undefined
 :man manual: User commands
 :man source: quote-and-join {release-version}
 :page-layout: base
 :command: uqaj
 
+endif::[]
 == NAME
 
 uqaj - split and unquote lines in files
@@ -63,34 +66,9 @@ Remove prefix and suffix specified by string
 *-P* _string_::
 Remove prefix (parenthese is `<`, `{`, `(` or `[`) and suffix (associated parenthese).
 
-== EXAMPLES
-
-.Remove prefix `before`, remove suffix `after`, split using `,`, unquote using `{}`
-....
-$ s="before{first item},{second  item},{third item}after"
-$ echo $s | ./uqaj -j, -p'{' -A before -B after
-first item
-second item
-third item
-....
-
-.Remove prefix `<`, remove suffix `>`, split using `,{nbsp}`, unquote using `"`
-....
-$ s='<"lorem", "ipsum", "dolores", "est">'
-$ echo $s | ./uqaj -J -A '<' -B '>' -qq
-lorem
-ipsum
-dolores
-est
-....
+include::uqaj-examples.adoc[]
 
 ifdef::backend-manpage[]
-== AUTHOR
-
-Written by Jean-François Giraud.
-
-== COPYRIGHT
-
-Copyright (C) 2020 Jean-François Giraud.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
-This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
+include::author.adoc[]
+include::copyright.adoc[]
 endif::[]
