@@ -1,5 +1,5 @@
 DESTDIR ?= /usr/local
-PACKAGE_NAME ?= quote-and-join
+REPOSITORY_NAME ?= quote-and-join
 SCRIPTS = qaj uqaj
 GENERATED_FILES = doc/generated/man/man1/qaj.1 doc/generated/txt/qaj.1.txt doc/generated/man/man1/uqaj.1 doc/generated/txt/uqaj.1.txt doc/generated/md/qaj.md doc/generated/md/uqaj.md
 VERSION ?= $(shell cat doc/VERSION)
@@ -20,6 +20,7 @@ usage:
 		* archive: create a tgz (used in github pipeline for release)
 		* commit-release VERSION=X.Y.Z: commit files and create a release
 		* update-doc: update man pages and usages
+		* update-version VERSION=X.Y.Z: update man pages and usages
 		* install-dependencies: install dependencies (you must call this target with sudo)
 	EOF
 
@@ -55,6 +56,7 @@ update-version:
 	[[ "$(VERSION)" == "$(FILE_VERSION)" ]] && echo "Change version number! (make update-version VERSION=X.Y.Z)" && exit 1
 	@echo "Modify version in doc/VERSION"
 	@echo "$(VERSION)" > doc/VERSION
+	make update-doc
 
 .PHONY: update-doc
 update-doc: $(GENERATED_FILES)
@@ -76,23 +78,23 @@ test:
 	bash tests/uqaj_tests.sh
 
 
-$(PACKAGE_NAME).tar.gz: $(PACKAGE_NAME).tar
+$(REPOSITORY_NAME).tar.gz: $(REPOSITORY_NAME).tar
 	@echo "Compress archive $@"
 	@gzip -f $<
 
-$(PACKAGE_NAME).tar: update-doc
+$(REPOSITORY_NAME).tar: update-doc
 	@echo "Create archive $@"
-	@tar cf $(PACKAGE_NAME).tar bin/*
-	@tar rf $(PACKAGE_NAME).tar LICENSE --transform 's,^,share/doc/$(PACKAGE_NAME)/,'
-	@tar rf $(PACKAGE_NAME).tar doc/generated/man/man1/*.1 --transform 's,^doc/generated/,,'
+	@tar cf $(REPOSITORY_NAME).tar bin/*
+	@tar rf $(REPOSITORY_NAME).tar LICENSE --transform 's,^,share/doc/$(REPOSITORY_NAME)/,'
+	@tar rf $(REPOSITORY_NAME).tar doc/generated/man/man1/*.1 --transform 's,^doc/generated/,,'
 
 .PHONY: archive
-archive: $(PACKAGE_NAME).tar.gz
+archive: $(REPOSITORY_NAME).tar.gz
 
 .PHONY: install
-install: $(PACKAGE_NAME).tar.gz
+install: $(REPOSITORY_NAME).tar.gz
 	@echo "Install software to $(DESTDIR)"
-	tar zxvf $(PACKAGE_NAME).tar.gz -C $(DESTDIR)
+	tar zxvf $(REPOSITORY_NAME).tar.gz -C $(DESTDIR)
 
 .PHONY: uninstall
 uninstall:
@@ -100,11 +102,11 @@ uninstall:
 	@for script in $(SCRIPTS); do
 	@	rm -f $(DESTDIR)/bin/$$script $(DESTDIR)/man/man1/$$script.1
 	@done
-	@rm -rf $(DESTDIR)/share/doc/$(PACKAGE_NAME)/
+	@rm -rf $(DESTDIR)/share/doc/$(REPOSITORY_NAME)/
 
 .PHONY: clean
 clean:
 	@echo "Clean files"
-	@rm -f $(PACKAGE_NAME).tar.gz
+	@rm -f $(REPOSITORY_NAME).tar.gz
 
 
