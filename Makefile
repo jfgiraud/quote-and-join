@@ -66,6 +66,7 @@ commit-release: update-version
 	@echo "Commit release $$VERSION"
 	git add .
 	git commit -m "Commit for creating tag v$$VERSION"
+	git push
 	git tag "v$$VERSION" -m "Tag v$$VERSION"
 	git push --tags
 
