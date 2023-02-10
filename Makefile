@@ -11,16 +11,16 @@ usage:
 		* archive: create a tgz (used in github pipeline for release)
 		* commit-release VERSION=v{X.Y.Z}: commit files and create a release
 		* update-doc VERSION=v{X.Y.Z}: update man pages and usages
-		* install-asciidoctor: install asciidoctor (you must call this target with sudo)
+		* install-dependencies: install dependencies (you must call this target with sudo)
 	EOF
 
-.PHONY: install-asciidoctor
-install-asciidoctor:
+.PHONY: install-dependencies
+install-dependencies:
 	apt install asciidoctor
 
 /usr/bin/asciidoctor:
-	echo "You must install asciidoctor."
-	echo "sudo make install-asciidoctor"
+	echo "You must install dependencies."
+	echo "sudo make install-dependencies"
 
 .PHONY: update-doc
 update-doc: doc/qaj.adoc doc/uqaj.adoc /usr/bin/asciidoctor
