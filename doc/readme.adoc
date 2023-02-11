@@ -1,3 +1,5 @@
+image:https://img.shields.io/github/actions/workflow/status/jfgiraud/quote-and-join/main.yml?label=CI[https://github.com/jfgiraud/quote-and-join/actions]
+
 == quote and join utilities
 
 Small utilities to:
