@@ -4,11 +4,11 @@ SCRIPTS = qaj uqaj
 GENERATED_FILES = doc/generated/man/man1/qaj.1 doc/generated/txt/qaj.1.txt doc/generated/man/man1/uqaj.1 doc/generated/txt/uqaj.1.txt doc/generated/md/qaj.md doc/generated/md/uqaj.md
 VERSION ?= $(shell cat doc/VERSION)
 FILE_VERSION ?= $(shell cat doc/VERSION)
+TESTS = tests/qaj_tests.sh tests/uqaj_tests.sh
+
 
 .ONESHELL:
 SHELL=bash
-
-## https://svn.lal.in2p3.fr/LCG/QWG/External/docbook-xsl-ns-1.74.0/tools/make/Makefile.DocBook
 
 .PHONY: usage
 usage:
@@ -72,11 +72,14 @@ commit-release: update-version
 	git tag "v$$VERSION" -m "Tag v$$VERSION"
 	git push --tags
 
+
 .PHONY: test
 test:
-	bash tests/qaj_tests.sh
-	bash tests/uqaj_tests.sh
-
+	@echo "Run tests"
+	@for t in $(TESTS); do
+	@echo "Run $$t"
+	@	bash $$t
+	@done
 
 $(REPOSITORY_NAME).tar.gz: $(REPOSITORY_NAME).tar
 	@echo "Compress archive $@"
