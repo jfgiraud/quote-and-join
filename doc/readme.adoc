@@ -1,0 +1,19 @@
+== quote and join utilities
+
+Small utilities to:
+
+- quote and join words or lines in files
+- split and unquote words in files
+
+== usage
+
+- link:doc/generated/md/qaj.md[qaj]
+- link:doc/generated/md/uqaj.md[uqaj]
+
+== qaj examples
+
+include::qaj-examples.adoc[tag=examples]
+
+== uqaj examples
+
+include::uqaj-examples.adoc[tag=examples]

@@ -1,5 +1,5 @@
 == EXAMPLES
-
+// tag::examples[]
 .Quote words with `'` and join with `,`
 [source,shell]
 ----
@@ -58,3 +58,4 @@ $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -J -t
 $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j, -A 'Final result: ' -B '.'
 Final result: "lorem","ipsum","dolores","est".
 ----
+// end::examples[]

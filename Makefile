@@ -51,6 +51,10 @@ doc/generated/txt/%.1.txt: doc/generated/man/man1/%.1 doc/VERSION
 	@echo "Rewrite usage in $$SCRIPT"
 	@awk -i inplace -v input="$@" 'BEGIN { p = 1 } /#BEGIN_DO_NOT_MODIFY:make update-doc/{ print; p = 0; while(getline line<input){print line} } /#END_DO_NOT_MODIFY:make update-doc/{ p = 1 } p' bin/$$SCRIPT
 
+README.md: doc/generated/md/readme.md
+	@echo "Move to README.md"
+	@mv -f doc/generated/md/readme.md README.md
+
 .PHONY: update-version
 update-version:
 	[[ "$(VERSION)" == "$(FILE_VERSION)" ]] && echo "Change version number! (make update-version VERSION=X.Y.Z)" && exit 1

@@ -1,5 +1,6 @@
 == EXAMPLES
 
+// tag::examples[]
 .Remove prefix `before`, remove suffix `after`, split using `,`, unquote using `{}`
 [source,shell]
 ----
@@ -20,3 +21,4 @@ ipsum
 dolores
 est
 ----
+// end::examples[]
