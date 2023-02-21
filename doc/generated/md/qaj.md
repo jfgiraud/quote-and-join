@@ -11,7 +11,7 @@ SYNOPSIS
 DESCRIPTION
 ===========
 
-qaj is a small utility to:
+**qaj** is a small utility to:
 
 -   select and sort items (words or lines) in files
 
