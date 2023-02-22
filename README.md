@@ -97,7 +97,7 @@ TLDR uqaj
 unquote using `{}`.**
 
     $ s="before{first item},{second  item},{third item}after"
-    $ echo $s | ./uqaj -j, -p'{' -A before -B after
+    $ echo $s | uqaj -j, -p'{' -A before -B after
     first item
     second item
     third item
@@ -106,7 +106,7 @@ unquote using `{}`.**
 `"`.**
 
     $ s='<"lorem", "ipsum", "dolores", "est">'
-    $ echo $s | ./uqaj -J -A '<' -B '>' -qq
+    $ echo $s | uqaj -J -A '<' -B '>' -qq
     lorem
     ipsum
     dolores
