@@ -34,26 +34,28 @@ install-dependencies:
 	echo "sudo make install-dependencies"
 
 doc/generated/man/man1/%.1: doc/%.adoc doc/VERSION
-	@echo "Create $@"
+	@echo "Generate $@"
 	@asciidoctor -b manpage -a release-version="$(VERSION)" $< -o $@
 
 doc/generated/md/%.md: doc/%.adoc doc/VERSION
-	@echo "Create $@"
+	@echo "Generate $@"
 	@SCRIPT=$(shell basename "$@" | sed 's/\..*//')
 	@asciidoctor -b docbook doc/$$SCRIPT.adoc -o doc/generated/md/$$SCRIPT.xml
 	@pandoc -t gfm+footnotes -f docbook -t markdown_strict doc/generated/md/$$SCRIPT.xml -o doc/generated/md/$$SCRIPT.md
 	@rm -f doc/generated/md/$$SCRIPT.xml
 
 doc/generated/txt/%.1.txt: doc/generated/man/man1/%.1 doc/VERSION
-	@echo "Create $@"
+	@echo "Generate $@"
 	@man -l $< > $@
 	@SCRIPT=$(shell basename "$@" | sed 's/\..*//')
 	@echo "Rewrite usage in $$SCRIPT"
 	@awk -i inplace -v input="$@" 'BEGIN { p = 1 } /#BEGIN_DO_NOT_MODIFY:make update-doc/{ print; p = 0; while(getline line<input){print line} } /#END_DO_NOT_MODIFY:make update-doc/{ p = 1 } p' bin/$$SCRIPT
 
 README.md: doc/generated/md/readme.md
-	@echo "Move to README.md"
-	@mv -f doc/generated/md/readme.md README.md
+	@echo "Generate README.md"
+	@printf "\n[//]: # (This file is generated, modify doc/readme.adoc and regenerate it with 'make update-doc')\n\n" > README.md
+	@cat doc/generated/md/readme.md >> README.md
+	@rm -f doc/generated/md/readme.md
 
 .PHONY: update-version
 update-version:
@@ -114,6 +116,6 @@ uninstall:
 .PHONY: clean
 clean:
 	@echo "Clean files"
-	@rm -f $(REPOSITORY_NAME).tar.gz
+	@rm -f $(REPOSITORY_NAME).tar.gz doc/generated/md/readme.md
 
 
