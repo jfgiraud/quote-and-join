@@ -7,15 +7,20 @@ Small utilities to:
 - quote and join words or lines in files
 - split and unquote words in files
 
-== usage
+== TLDR
 
-- link:doc/generated/md/qaj.md[qaj]
-- link:doc/generated/md/uqaj.md[uqaj]
+=== qaj
 
-== qaj examples
+include::qaj.adoc[tag=examples]
 
-include::qaj-examples.adoc[tag=examples]
+=== uqaj
 
-== uqaj examples
+include::uqaj.adoc[tag=examples]
 
-include::uqaj-examples.adoc[tag=examples]
+== usage qaj
+
+include::qaj.adoc[tag=options]
+
+== usage uqaj
+
+include::uqaj.adoc[tag=options]
