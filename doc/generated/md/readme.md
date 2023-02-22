@@ -1,6 +1,3 @@
-
-[//]: # (This file is generated, modify doc/readme.adoc and regenerate it with 'make update-doc')
-
 ![<https://github.com/jfgiraud/quote-and-join/actions>](https://img.shields.io/github/actions/workflow/status/jfgiraud/quote-and-join/main.yml?label=CI)
 
 quote and join utilities

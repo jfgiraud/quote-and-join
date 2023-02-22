@@ -1,7 +1,7 @@
 DESTDIR ?= /usr/local
 REPOSITORY_NAME ?= quote-and-join
 SCRIPTS = qaj uqaj
-GENERATED_FILES = doc/generated/man/man1/qaj.1 doc/generated/txt/qaj.1.txt doc/generated/man/man1/uqaj.1 doc/generated/txt/uqaj.1.txt doc/generated/md/qaj.md doc/generated/md/uqaj.md
+GENERATED_FILES = doc/generated/man/man1/qaj.1 doc/generated/txt/qaj.1.txt doc/generated/man/man1/uqaj.1 doc/generated/txt/uqaj.1.txt doc/generated/md/qaj.md doc/generated/md/uqaj.md doc/generated/md/readme.md
 VERSION ?= $(shell cat doc/VERSION)
 FILE_VERSION ?= $(shell cat doc/VERSION)
 TESTS = tests/qaj_tests.sh tests/uqaj_tests.sh
@@ -51,12 +51,6 @@ doc/generated/txt/%.1.txt: doc/generated/man/man1/%.1 doc/VERSION
 	@echo "Rewrite usage in $$SCRIPT"
 	@awk -i inplace -v input="$@" 'BEGIN { p = 1 } /#BEGIN_DO_NOT_MODIFY:make update-doc/{ print; p = 0; while(getline line<input){print line} } /#END_DO_NOT_MODIFY:make update-doc/{ p = 1 } p' bin/$$SCRIPT
 
-README.md: doc/generated/md/readme.md
-	@echo "Generate README.md"
-	@printf "\n[//]: # (This file is generated, modify doc/readme.adoc and regenerate it with 'make update-doc')\n\n" > README.md
-	@cat doc/generated/md/readme.md >> README.md
-	@rm -f doc/generated/md/readme.md
-
 .PHONY: update-version
 update-version:
 	[[ "$(VERSION)" == "$(FILE_VERSION)" ]] && echo "Change version number! (make update-version VERSION=X.Y.Z)" && exit 1
@@ -66,6 +60,9 @@ update-version:
 
 .PHONY: update-doc
 update-doc: $(GENERATED_FILES)
+	@echo "Generate README.md"
+	@printf "\n[//]: # (This file is generated, modify doc/readme.adoc and regenerate it with 'make update-doc')\n\n" > README.md
+	@cat doc/generated/md/readme.md >> README.md
 
 .PHONY: commit-release
 commit-release: update-version
