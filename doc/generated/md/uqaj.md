@@ -18,6 +18,9 @@ With no FILE, or when FILE is `-`, read standard input.
 OPTIONS
 =======
 
+**-h**  
+Display help.
+
 Unquoting
 ---------
 

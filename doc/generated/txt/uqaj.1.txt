@@ -12,6 +12,9 @@ DESCRIPTION
        With no FILE, or when FILE is -, read standard input.
 
 OPTIONS
+       -h
+           Display help.
+
    Unquoting
        -q
            Unquote items with the character '

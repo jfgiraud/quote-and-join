@@ -22,6 +22,9 @@ DESCRIPTION
        With no FILE, or when FILE is -, read standard input.
 
 OPTIONS
+       -h
+           Display help.
+
    Select and sort items
        -w
            Select words.

@@ -32,6 +32,9 @@ With no FILE, or when FILE is `-`, read standard input.
 == OPTIONS
 
 // tag::options[]
+*-h*::
+Display help.
+
 === Select and sort items
 
 *-w*::

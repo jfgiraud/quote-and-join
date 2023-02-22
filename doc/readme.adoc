@@ -7,20 +7,45 @@ Small utilities to:
 - quote and join words or lines in files
 - split and unquote words in files
 
-== TLDR
+== Installation
 
-=== qaj
+The destination directory will contain 3 sub-directories: `bin`, `share` and `man`.
+
+
+.Using git repo
+[source,shell]
+----
+$ git clone https://github.com/jfgiraud/quote-and-join.git
+$ cd quote-and-join
+$ sudo make install DESTDIR=/usr/local
+----
+
+.Using latest tarball release
+[source,shell]
+----
+$ curl -s -L https://api.github.com/repos/jfgiraud/quote-and-join/releases/latest | grep browser_download_url | cut -d':' -f2- | tr -d ' ",' | xargs wget -O quote-and-join.tgz
+$ sudo tar zxvf quote-and-join.tgz -C /usr/local
+----
+== Usages
+
+.Use man !
+[source,shell]
+----
+$ man qaj
+$ man uqaj
+----
+
+.Or `-h` option
+[source,shell]
+----
+$ qaj -h
+$ uqaj -h
+----
+
+== TLDR qaj
 
 include::qaj.adoc[tag=examples]
 
-=== uqaj
+== TLDR uqaj
 
 include::uqaj.adoc[tag=examples]
-
-== usage qaj
-
-include::qaj.adoc[tag=options]
-
-== usage uqaj
-
-include::uqaj.adoc[tag=options]

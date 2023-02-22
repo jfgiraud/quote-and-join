@@ -12,11 +12,38 @@ Small utilities to:
 
 -   split and unquote words in files
 
-TLDR
-====
+Installation
+============
 
-qaj
----
+The destination directory will contain 3 sub-directories: `bin`, `share`
+and `man`.
+
+**Using git repo.**
+
+    $ git clone https://github.com/jfgiraud/quote-and-join.git
+    $ cd quote-and-join
+    $ sudo make install DESTDIR=/usr/local
+
+**Using latest tarball release.**
+
+    $ curl -s -L https://api.github.com/repos/jfgiraud/quote-and-join/releases/latest | grep browser_download_url | cut -d':' -f2- | tr -d ' ",' | xargs wget -O quote-and-join.tgz
+    $ sudo tar zxvf quote-and-join.tgz -C /usr/local
+
+Usages
+======
+
+**Use man !.**
+
+    $ man qaj
+    $ man uqaj
+
+**Or `-h` option.**
+
+    $ qaj -h
+    $ uqaj -h
+
+TLDR qaj
+========
 
 **Quote words with `'` and join with `,`.**
 
@@ -63,8 +90,8 @@ prefix and suffix on the final result..**
     $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j, -A 'Final result: ' -B '.'
     Final result: "lorem","ipsum","dolores","est".
 
-uqaj
-----
+TLDR uqaj
+=========
 
 **Remove prefix `before`, remove suffix `after`, split using `,`,
 unquote using `{}`.**
@@ -84,131 +111,3 @@ unquote using `{}`.**
     ipsum
     dolores
     est
-
-usage qaj
-=========
-
-Select and sort items
----------------------
-
-**-w**  
-Select words.
-
-**-l**  
-Select lines.
-
-**-s**  
-Sort items in lexicographic order.
-
-**-S**  
-Sort items in reverse lexicographic order.
-
-**-u**  
-Remove duplicate items (implies **-s** or **-S** option).
-
-Prefix and/or suffix items
---------------------------
-
-**-q**  
-Quote items with the character `'`.
-
-**-qq**  
-Quote items with the character `"`.
-
-**-a** *string*  
-Prefix each items with the given string.
-
-**-b** *string*  
-Suffix each items with the given string.
-
-**-c** *string*  
-Prefix and suffix each items with the given string.
-
-**-p** *string*  
-The given string must be `<`, `{`, `(` or `[`. Prefix each items with
-the given string. Suffix each items with the associated closing
-parenthese of the given parenthese.
-
-**-t**  
-Do not trim item.
-
-**-e**  
-Do not escape parentheses in item.
-
-Join the prefixed/suffixed items
---------------------------------
-
-**-j** *string*  
-Use the given string to join quoted items.
-
-**-J**  
-Use the character `,` to join quoted items.
-
-Prefix and/or suffix the final result
--------------------------------------
-
-After the process of quoting, sorting and/or jointing:
-
-**-A** *string*  
-Prefix the result with the given string.
-
-**-B** *string*  
-Suffix the result with the given string.
-
-**-C** *string*  
-Prefix and suffix the result with the given string.
-
-**-P** *string*  
-The given parenthese must be `<`, `{`, `(` or `[`. Prefix the result
-with the given parenthese and suffix the result with the associated
-closing parenthese.
-
-usage uqaj
-==========
-
-Unquoting
----------
-
-**-q**  
-Unquote items with the character `'`
-
-**-qq**  
-Unquote items with the character `"`
-
-**-a** *string*  
-Remove prefix specified by string
-
-**-b** *string*  
-Remove suffix specified by string
-
-**-c** *string*  
-Remove prefix and suffix specified by string
-
-**-p** *string*  
-The given string must be `<`, `{`, `(` or `[`. Remove the given
-parenthese and associated closing parenthese of each items.
-
-Splitting
----------
-
-**-j** *string*  
-Split using the given string
-
-**-J**  
-Split using the character `,`
-
-Before the process of splitting and unquoting
----------------------------------------------
-
-**-A** *string*  
-Remove prefix specified by string
-
-**-B** *string*  
-Remove suffix specified by string
-
-**-C** *string*  
-Remove prefix and suffix specified by string
-
-**-P** *string*  
-Remove prefix (parenthese is `<`, `{`, `(` or `[`) and suffix
-(associated parenthese).
