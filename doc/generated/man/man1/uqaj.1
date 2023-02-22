@@ -107,7 +107,7 @@ Remove prefix (parenthese is \f[CR]<\fP, \f[CR]{\fP, \f[CR](\fP or \f[CR][\fP) a
 .\}
 .nf
 $ s="before{first item},{second  item},{third item}after"
-$ echo $s | ./uqaj \-j, \-p\(aq{\(aq \-A before \-B after
+$ echo $s | uqaj \-j, \-p\(aq{\(aq \-A before \-B after
 first item
 second item
 third item
@@ -124,7 +124,7 @@ third item
 .\}
 .nf
 $ s=\(aq<"lorem", "ipsum", "dolores", "est">\(aq
-$ echo $s | ./uqaj \-J \-A \(aq<\(aq \-B \(aq>\(aq \-qq
+$ echo $s | uqaj \-J \-A \(aq<\(aq \-B \(aq>\(aq \-qq
 lorem
 ipsum
 dolores
