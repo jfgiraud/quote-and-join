@@ -1,7 +1,7 @@
 ![<https://github.com/jfgiraud/quote-and-join/actions>](https://img.shields.io/github/actions/workflow/status/jfgiraud/quote-and-join/main.yml?label=CI)
 
-quote and join utilities
-========================
+Description
+===========
 
 Small utilities to:
 
@@ -29,12 +29,12 @@ and `man`.
 Usages
 ======
 
-**Use man !.**
+**Use man.**
 
     $ man qaj
     $ man uqaj
 
-**Or `-h` option.**
+**Use option.**
 
     $ qaj -h
     $ uqaj -h

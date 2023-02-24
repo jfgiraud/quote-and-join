@@ -1,6 +1,6 @@
 image:https://img.shields.io/github/actions/workflow/status/jfgiraud/quote-and-join/main.yml?label=CI[https://github.com/jfgiraud/quote-and-join/actions]
 
-== quote and join utilities
+== Description
 
 Small utilities to:
 
@@ -28,14 +28,14 @@ $ sudo tar zxvf quote-and-join.tgz -C /usr/local
 ----
 == Usages
 
-.Use man !
+.Use man
 [source,shell]
 ----
 $ man qaj
 $ man uqaj
 ----
 
-.Or `-h` option
+.Use option
 [source,shell]
 ----
 $ qaj -h
