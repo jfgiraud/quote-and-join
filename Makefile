@@ -69,7 +69,7 @@ commit-release: update-version
 	@echo "Update documentation"
 	make update-doc
 	@echo "Commit release $$VERSION"
-	git add .
+	git add -u .
 	git commit -m "Commit for creating tag v$$VERSION"
 	git push
 	git tag "v$$VERSION" -m "Tag v$$VERSION"
