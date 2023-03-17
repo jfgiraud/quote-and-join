@@ -38,6 +38,9 @@ assert_exec_equals \
     "echo '<\"lorem\", \"ipsum\", \"dolores\", \"est\">' | ../bin/uqaj -J -A '<' -B '>' -qq" \
     $'lorem\nipsum\ndolores\nest'
 
+assert_exec_equals \
+    "echo '[a,b,c]' | ../bin/uqaj -j',' -P'['" \
+    $'a\nb\nc'
 
 echo "${ok}/${total} (${ko} errors)"
 

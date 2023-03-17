@@ -119,28 +119,28 @@ do
         p)
             if [[ "$OPTARG" == '<' ]]; then
                 right=">"
-                elif [[ "$OPTARG" == '(' ]]; then
-                    right=")"
-                elif [[ "$OPTARG" == '{' ]]; then
-                    right="}"
-                elif [[ "$OPTARG" == '[' ]]; then
-                    right="]"
-                else
-                    error 1 "Invalid paren!"
+            elif [[ "$OPTARG" == '(' ]]; then
+                right=")"
+            elif [[ "$OPTARG" == '{' ]]; then
+                right="}"
+            elif [[ "$OPTARG" == '[' ]]; then
+                right="]"
+            else
+                error 1 "Invalid paren!"
             fi
             left="$OPTARG"
             ;;
         P)
             if [[ "$OPTARG" == '<' ]]; then
                 after=">"
-                elif [[ "$OPTARG" == '(' ]]; then
-                    after=")"
-                elif [[ "$OPTARG" == '{' ]]; then
-                    after="}"
-                elif [[ "$OPTARG" == '[' ]]; then
-                    after="]"
-                else
-                    error 1 "Invalid paren!"
+            elif [[ "$OPTARG" == '(' ]]; then
+                after=")"
+            elif [[ "$OPTARG" == '{' ]]; then
+                after="}"
+            elif [[ "$OPTARG" == '[' ]]; then
+                after="]"
+            else
+                error 1 "Invalid paren!"
             fi
             before="$OPTARG"
             ;;
@@ -176,11 +176,26 @@ if [[ -z $file ]]; then
     file="-"
 fi
 
+# functions
+function escaped_search() {
+    echo "$1" | sed 's/[^^]/[&]/g; s/\^/\\^/g'
+}
+
+function escaped_replacement() {
+    echo "$1" | sed 's/[&/\]/\\&/g'
+}
+
+before_escaped=$(escaped_search "${before}")
+after_escaped=$(escaped_search "${after}")
+left_escaped=$(escaped_search "${left}")
+right_escaped=$(escaped_search "${right}")
+join_escaped=$(escaped_search "${join}")
+
 while [[ -n "$file" ]];
 do
-	cat "$file" | sed -e "1s/^${before}//" -e "\$s/${after}$//" | while read line || [[ $line ]]
+	cat "$file" | sed -e "1s/^${before_escaped}//" -e "\$s/${after_escaped}$//" | while read line || [[ $line ]]
 	do
-        echo "$line" | sed -e "1s/^${left}//" -e "s/${right}${join}${left}/\n/g" -e "\$s/${right}$//"
+        echo "$line" | sed -e "1s/^${left_escaped}//" -e "s/${right_escaped}${join_escaped}${left_escaped}/\n/g" -e "\$s/${right_escaped}$//"
 	done
 	shift
 	file="$1"
