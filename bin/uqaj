@@ -128,8 +128,8 @@ do
                 else
                     error 1 "Invalid paren!"
             fi
-                left="$OPTARG"
-                ;;
+            left="$OPTARG"
+            ;;
         P)
             if [[ "$OPTARG" == '<' ]]; then
                 after=">"
@@ -142,15 +142,15 @@ do
                 else
                     error 1 "Invalid paren!"
             fi
-                before="$OPTARG"
-                ;;
+            before="$OPTARG"
+            ;;
 		q)
             if [[ -z "$qchar" ]]; then
                 qchar="'"
-                else
+            else
                 qchar='"'
-                fi
-                ;;
+            fi
+            ;;
 		a)
 		    left="$OPTARG"
 		    ;;
