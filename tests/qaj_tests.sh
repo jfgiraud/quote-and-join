@@ -62,6 +62,10 @@ assert_exec_equals \
     '"lorem", "ipsum", "dolores", "est"'
 
 assert_exec_equals \
+    'printf "lorem\nipsum\n dolores\n\nest" | ../bin/qaj -qq -t -J' \
+    '"lorem", "ipsum", " dolores", "est"'
+
+assert_exec_equals \
     'printf "lorem\nipsum\n dolores\n\nest" | ../bin/qaj -qq -J -A "<" -B ">"' \
     '<"lorem", "ipsum", "dolores", "est">'
 

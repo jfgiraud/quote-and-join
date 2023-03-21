@@ -169,16 +169,19 @@ what='l'
 left=''
 right=''
 strip=1
-escape=1
 qchar=''
 before=''
 after=''
 join='\n'
-while getopts ":qlwthj:Ja:b:c:p:P:A:B:C:usSue" o
+interpret=1
+while getopts ":qlwthj:Ja:b:c:p:P:A:B:C:usSur" o
 do  
 	  case "$o" in
             h)
                 usage
+                ;;
+            r)
+                interpret=0
                 ;;
             l)
                 what='l'
@@ -208,9 +211,6 @@ do
                 ;;
             t)
                 strip=0
-                ;;
-            e)
-                escape=0
                 ;;
             b)
                 right="$OPTARG"
@@ -288,25 +288,10 @@ function strip() {
     echo "$s"
 }
 
-function escape() {
-    local s="$1"
-    if [[ "$left" == "$right" ]]; then
-        s=${s//$left/\\$left}
-    else
-        s=${s//$left/\\$left}
-        s=${s//$right/\\$right}
-    fi
-    echo "$s"
-}
-
-
 function print() {
     local w="$1"
     if [[ $strip -eq 1 ]]; then
 	      w=$(strip "$w")
-    fi
-    if [[ $escape -eq 1 ]]; then
-	     w=$(escape "$w")
     fi
     [[ -n "$w" ]] && echo "$left$w$right"
 }
@@ -318,6 +303,27 @@ function mysort() {
 	      cat
     fi
 }
+
+function escaped_replacement() {
+    echo "$1"  | sed 's/[&/\]/\\&/g'
+    #echo "$1"| sed 's/[&/]/\\&/g'| sed 's/\\n/\n/g'
+}
+
+
+function interpret_special_chars() {
+    if [[ $interpret -eq 1 ]]; then
+        sed 's#\\n#\n#g'
+    else
+        cat -
+    fi
+}
+#TODO options incompatibles
+#printf "lorem\nipsum dolores\n\nest" | ./bin/qaj -J -qq -p'['
+#"lorem", "ipsum dolores", "est"
+
+before_escaped=$(escaped_replacement "${before}")
+after_escaped=$(escaped_replacement "${after}")
+join_escaped=$(escaped_replacement "${join}")
 
 while [[ -n "$file" ]];
 do
@@ -331,7 +337,7 @@ do
                 print "$word"
             done
         fi
-    done | mysort | sed ":a;N;\$!ba;s/\n/$join/g" | sed -e "1s/^/$before/;\$s/$/$after/;"
+    done | mysort | sed ":a;N;\$!ba;s/\n/${join_escaped}/g" | sed -e "1s/^/${before_escaped}/;\$s/$/${after_escaped}/;" | interpret_special_chars
     shift
     file="$1"
 done

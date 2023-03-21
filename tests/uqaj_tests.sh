@@ -42,6 +42,14 @@ assert_exec_equals \
     "echo '[a,b,c]' | ../bin/uqaj -j',' -P'['" \
     $'a\nb\nc'
 
+assert_exec_equals \
+    "echo '[a, b, c]' | ../bin/uqaj -J -P'['" \
+    $'a\nb\nc'
+
+assert_exec_equals \
+    "echo '[ a, b, c ]' | ../bin/uqaj -J -P'['" \
+    $'a\nb\nc'
+
 echo "${ok}/${total} (${ko} errors)"
 
 if [[ ${ok} -ne ${total} ]]; then

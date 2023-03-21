@@ -76,9 +76,6 @@ closing parenthese of the given parenthese.
 *-t*::
 Do not trim item.
 
-*-e*::
-Do not escape parentheses in item.
-
 === Join the prefixed/suffixed items
 
 *-j* _string_::
