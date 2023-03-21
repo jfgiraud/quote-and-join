@@ -75,9 +75,6 @@ parenthese of the given parenthese.
 **-t**  
 Do not trim item.
 
-**-e**  
-Do not escape parentheses in item.
-
 Join the prefixed/suffixed items
 --------------------------------
 
@@ -105,6 +102,13 @@ Prefix and suffix the result with the given string.
 The given parenthese must be `<`, `{`, `(` or `[`. Prefix the result
 with the given parenthese and suffix the result with the associated
 closing parenthese.
+
+Escape
+------
+
+**-e**  
+Escape specials characters (`\r`, `\n`, `\b`, `\f`, `\t`) in prefixes,
+suffixes and join delimiter.
 
 EXAMPLES
 ========

@@ -1,4 +1,4 @@
-QAJ(1)                                                         User commands                                                        QAJ(1)
+QAJ(1)                                                   User commands                                                   QAJ(1)
 
 NAME
        qaj - quote and join words or lines in files
@@ -9,13 +9,13 @@ SYNOPSIS
 DESCRIPTION
        qaj is a small utility to:
 
-       ·   select and sort items (words or lines) in files
+       •   select and sort items (words or lines) in files
 
-       ·   prefix and/or suffix items
+       •   prefix and/or suffix items
 
-       ·   join the prefixed/suffixed items
+       •   join the prefixed/suffixed items
 
-       ·   prefix and/or suffix the final result.
+       •   prefix and/or suffix the final result.
 
        By default, the line selector is used and the items are trimmed.
 
@@ -58,14 +58,11 @@ OPTIONS
            Prefix and suffix each items with the given string.
 
        -p string
-           The given string must be <, {, ( or [. Prefix each items with the given string. Suffix each items with the associated closing
-           parenthese of the given parenthese.
+           The given string must be <, {, ( or [. Prefix each items with the given string. Suffix each items with the
+           associated closing parenthese of the given parenthese.
 
        -t
            Do not trim item.
-
-       -e
-           Do not escape parentheses in item.
 
    Join the prefixed/suffixed items
        -j string
@@ -87,8 +84,12 @@ OPTIONS
            Prefix and suffix the result with the given string.
 
        -P string
-           The given parenthese must be <, {, ( or [. Prefix the result with the given parenthese and suffix the result with the
-           associated closing parenthese.
+           The given parenthese must be <, {, ( or [. Prefix the result with the given parenthese and suffix the result with
+           the associated closing parenthese.
+
+   Escape
+       -e
+           Escape specials characters (\r, \n, \b, \f, \t) in prefixes, suffixes and join delimiter.
 
 EXAMPLES
        Quote words with ' and join with ,
@@ -135,10 +136,9 @@ EXAMPLES
            Final result: "lorem","ipsum","dolores","est".
 
 AUTHOR
-       Written by Jean-François Giraud.
+       Written by Jean-François Giraud. == COPYRIGHT
 
-COPYRIGHT
-       Copyright  © 2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free
-       software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law.
+       Copyright © 2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later http://gnu.org/licenses/gpl.html. This
+       is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law.
 
-quote-and-join 0.0.42                                           2023-02-22                                                          QAJ(1)
+quote-and-join 0.0.42                                      2023-03-21                                                    QAJ(1)
