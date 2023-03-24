@@ -305,20 +305,8 @@ function mysort() {
 }
 
 function escaped_replacement() {
-    echo "$1"  | sed 's/[&/\]/\\&/g'
+    echo "$1" # | sed 's/[&/\]/\\&/g'
 }
-
-
-function interpret_special_chars() {
-    if [[ $interpret -eq 1 ]]; then
-        sed 's#\\n#\n#g; s#\\r#\r#g; s#\\t#\t#g; s#\\b#\b#g; s#\\f#\f#g;'
-    else
-        cat -
-    fi
-}
-#TODO options incompatibles
-#printf "lorem\nipsum dolores\n\nest" | ./bin/qaj -J -qq -p'['
-#"lorem", "ipsum dolores", "est"
 
 before_escaped=$(escaped_replacement "${before}")
 after_escaped=$(escaped_replacement "${after}")
@@ -336,7 +324,7 @@ do
                 print "$word"
             done
         fi
-    done | mysort | sed ":a;N;\$!ba;s/\n/${join_escaped}/g" | sed -e "1s/^/${before_escaped}/;\$s/$/${after_escaped}/;" | interpret_special_chars
+    done | mysort | sed ":a;N;\$!ba;s/\n/${join_escaped}/g" | sed -e "1s/^/${before_escaped}/;\$s/$/${after_escaped}/;"
     shift
     file="$1"
 done

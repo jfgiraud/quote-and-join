@@ -69,6 +69,10 @@ assert_exec_equals \
     'printf "lorem\nipsum\n dolores\n\nest" | ../bin/qaj -qq -J -A "<" -B ">"' \
     '<"lorem", "ipsum", "dolores", "est">'
 
+assert_exec_equals \
+    'printf "a\nb\nc\n" | ../bin/qaj -P"[" -j",\n" -qq' \
+    $'["a",\n"b",\n"c"]'
+
 echo "${ok}/${total} (${ko} errors)"
 
 if [[ ${ok} -ne ${total} ]]; then

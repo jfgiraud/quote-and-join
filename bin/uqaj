@@ -195,7 +195,7 @@ while [[ -n "$file" ]];
 do
 	cat "$file" | sed -e "1s/^${before_escaped}//" -e "\$s/${after_escaped}$//" | while read line || [[ $line ]]
 	do
-        echo "$line" | sed -e "1s/^${left_escaped}//" -e "s/${right_escaped}${join_escaped}${left_escaped}/\n/g" -e "\$s/${right_escaped}$//"
+        echo "$line" | sed -e "1s/^${left_escaped}//"  -e "\$s/${right_escaped}//" | sed -ze "s/${join_escaped}/$/g" | sed -e "s/${right_escaped}${join_escaped}${left_escaped}/\n/g"
 	done
 	shift
 	file="$1"
