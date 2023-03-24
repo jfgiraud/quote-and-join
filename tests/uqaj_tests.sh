@@ -39,6 +39,10 @@ assert_exec_equals \
     $'lorem\nipsum\ndolores\nest'
 
 assert_exec_equals \
+    "echo '<\"lorem\", \"ipsum\", \" dolores\", \"est\">' | ../bin/uqaj -J -A '<' -B '>' -qq" \
+    $'lorem\nipsum\n dolores\nest'
+
+assert_exec_equals \
     "echo '[a,b,c]' | ../bin/uqaj -j',' -P'['" \
     $'a\nb\nc'
 
@@ -47,11 +51,11 @@ assert_exec_equals \
     $'a\nb\nc'
 
 assert_exec_equals \
-    "echo '[ a, b, c ]' | ../bin/uqaj -J -P'['" \
+    "echo '[ a, b, c ]' | ../bin/uqaj -J -P'[' -t" \
     $'a\nb\nc'
 
 assert_exec_equals \
-    'printf "[\"a\",\n\"b\",\n\"c\"\n]" | ../bin/uqaj -P"[" -j",\n" -qq' \
+    'printf "[\"a\",\n\"b\",\n\"c\"\n]" | ../bin/uqaj -P"[" -j",\n" -qq -t' \
     $'a\nb\nc'
 
 echo "${ok}/${total} (${ko} errors)"

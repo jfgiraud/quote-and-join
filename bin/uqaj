@@ -97,7 +97,8 @@ after=''
 left=''
 right=''
 join='\n'
-while getopts ":qhj:JA:a:B:b:c:p:P:" o
+trim=''
+while getopts ":qhj:JA:a:B:b:c:p:P:t" o
 do
   	case "$o" in
 		b)
@@ -160,6 +161,9 @@ do
 		B)
 		    after="$OPTARG"
 		    ;;
+		t)
+		    trim="\s*"
+		    ;;
         ?) error 1 $"invalid option -- '$OPTARG'";;
 	esac
 done
@@ -178,12 +182,9 @@ fi
 
 # functions
 function escaped_search() {
-    echo "$1" | sed 's/[^^]/[&]/g; s/\^/\\^/g'
+    printf "%s" "$1" | sed 's/[^^]/[&]/g; s/\^/\\^/g' | sed 's/\[\\\]\[n\]/\\n/g'
 }
 
-function escaped_replacement() {
-    echo "$1" | sed 's/[&/\]/\\&/g'
-}
 
 before_escaped=$(escaped_search "${before}")
 after_escaped=$(escaped_search "${after}")
@@ -191,12 +192,10 @@ left_escaped=$(escaped_search "${left}")
 right_escaped=$(escaped_search "${right}")
 join_escaped=$(escaped_search "${join}")
 
+
 while [[ -n "$file" ]];
 do
-	cat "$file" | sed -e "1s/^${before_escaped}//" -e "\$s/${after_escaped}$//" | while read line || [[ $line ]]
-	do
-        echo "$line" | sed -e "1s/^${left_escaped}//"  -e "\$s/${right_escaped}//" | sed -ze "s/${join_escaped}/$/g" | sed -e "s/${right_escaped}${join_escaped}${left_escaped}/\n/g"
-	done
+	cat "$file" | sed -ze "1s/^${trim}${before_escaped}${trim}${left_escaped}//" -ze "\$s/${right_escaped}${trim}${after_escaped}${trim}//" -ze "s/${right_escaped}${trim}${join_escaped}${trim}${left_escaped}/\n/g"
 	shift
 	file="$1"
 done
