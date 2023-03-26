@@ -1,4 +1,4 @@
-UQAJ(1)                                                        User commands                                                       UQAJ(1)
+UQAJ(1)                                                  User commands                                                  UQAJ(1)
 
 NAME
        uqaj - split and unquote lines in files
@@ -63,7 +63,7 @@ EXAMPLES
            second item
            third item
 
-       Remove prefix <, remove suffix >, split using , , unquote using "
+       Remove prefix <, remove suffix >, split using ,, unquote using "
 
            $ s='<"lorem", "ipsum", "dolores", "est">'
            $ echo $s | uqaj -J -A '<' -B '>' -qq
@@ -72,11 +72,19 @@ EXAMPLES
            dolores
            est
 
+       Remove prefix <, remove suffix >, split using ,, unquote using "
+
+           $ s=$'<"lorem",\n"ipsum", "dolores",\n"est">'
+           $ echo $s | uqaj -J -A '<' -B '>' -qq
+           lorem
+           ipsum
+           dolores
+           est
+
 AUTHOR
-       Written by Jean-François Giraud.
+       Written by Jean-François Giraud. == COPYRIGHT
 
-COPYRIGHT
-       Copyright  © 2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free
-       software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law.
+       Copyright © 2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later http://gnu.org/licenses/gpl.html. This
+       is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law.
 
-quote-and-join 0.0.42                                           2023-02-22                                                         UQAJ(1)
+quote-and-join 0.0.43                                      2023-03-26                                                   UQAJ(1)

@@ -80,10 +80,20 @@ unquote using `{}`.**
     second item
     third item
 
-**Remove prefix `<`, remove suffix `>`, split using `, `, unquote using
+**Remove prefix `<`, remove suffix `>`, split using `,`, unquote using
 `"`.**
 
     $ s='<"lorem", "ipsum", "dolores", "est">'
+    $ echo $s | uqaj -J -A '<' -B '>' -qq
+    lorem
+    ipsum
+    dolores
+    est
+
+**Remove prefix `<`, remove suffix `>`, split using `,`, unquote using
+`"`.**
+
+    $ s=$'<"lorem",\n"ipsum", "dolores",\n"est">'
     $ echo $s | uqaj -J -A '<' -B '>' -qq
     lorem
     ipsum
