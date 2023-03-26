@@ -84,7 +84,7 @@ second item
 third item
 ----
 
-.Remove prefix `<`, remove suffix `>`, split using `,{nbsp}`, unquote using `"`
+.Remove prefix `<`, remove suffix `>`, split using `,`, unquote using `"`
 [source,shell]
 ----
 $ s='<"lorem", "ipsum", "dolores", "est">'
@@ -94,6 +94,18 @@ ipsum
 dolores
 est
 ----
+
+.Remove prefix `<`, remove suffix `>`, split using `,`, unquote using `"`
+[source,shell]
+----
+$ s=$'<"lorem",\n"ipsum", "dolores",\n"est">'
+$ echo $s | uqaj -J -A '<' -B '>' -qq
+lorem
+ipsum
+dolores
+est
+----
+
 // end::examples[]
 
 ifdef::backend-manpage[]

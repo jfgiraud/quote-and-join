@@ -51,11 +51,11 @@ assert_exec_equals \
     $'a\nb\nc'
 
 assert_exec_equals \
-    "echo '[ a, b, c ]' | ../bin/uqaj -J -P'[' -t" \
+    "echo '[ a, b, c ]' | ../bin/uqaj -J -P'['" \
     $'a\nb\nc'
 
 assert_exec_equals \
-    'printf "[\"a\",\n\"b\",\n\"c\"\n]" | ../bin/uqaj -P"[" -j",\n" -qq -t' \
+    'printf "[\"a\",\n\"b\",\n\"c\"\n]" | ../bin/uqaj -P"[" -j",\n" -qq' \
     $'a\nb\nc'
 
 echo "${ok}/${total} (${ko} errors)"

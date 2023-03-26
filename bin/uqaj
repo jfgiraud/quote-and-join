@@ -97,8 +97,8 @@ after=''
 left=''
 right=''
 join='\n'
-trim=''
-while getopts ":qhj:JA:a:B:b:c:p:P:t" o
+trim="[[:space:]]*"
+while getopts ":qhj:JA:a:B:b:c:p:P:" o
 do
   	case "$o" in
 		b)
@@ -115,7 +115,7 @@ do
             join="$OPTARG"
             ;;
         J)
-            join=", "
+            join=","
             ;;
         p)
             if [[ "$OPTARG" == '<' ]]; then
@@ -161,9 +161,6 @@ do
 		B)
 		    after="$OPTARG"
 		    ;;
-		t)
-		    trim="\s*"
-		    ;;
         ?) error 1 $"invalid option -- '$OPTARG'";;
 	esac
 done
@@ -185,6 +182,9 @@ function escaped_search() {
     printf "%s" "$1" | sed 's/[^^]/[&]/g; s/\^/\\^/g' | sed 's/\[\\\]\[n\]/\\n/g'
 }
 
+function escaped_replacement() {
+    echo "$1" | sed 's/[&/\]/\\&/g'
+}
 
 before_escaped=$(escaped_search "${before}")
 after_escaped=$(escaped_search "${after}")
@@ -192,10 +192,23 @@ left_escaped=$(escaped_search "${left}")
 right_escaped=$(escaped_search "${right}")
 join_escaped=$(escaped_search "${join}")
 
+left_replacement=$(escaped_replacement "${left}")
+right_replacement=$(escaped_replacement "${right}")
+
+if [[ -z "${left}" && -n "${trim}" ]]; then
+    left_trim="[[:space:]]*"
+fi
+
+if [[ -z "${right}" && -n "${trim}" ]]; then
+    right_trim="[[:space:]]*"
+fi
 
 while [[ -n "$file" ]];
 do
-	cat "$file" | sed -ze "1s/^${trim}${before_escaped}${trim}${left_escaped}//" -ze "\$s/${right_escaped}${trim}${after_escaped}${trim}//" -ze "s/${right_escaped}${trim}${join_escaped}${trim}${left_escaped}/\n/g"
+	cat "$file" | sed -ze "s/${right_escaped}${trim}${join_escaped}${trim}${left_escaped}/${right_replacement}\n${left_replacement}/g" \
+        | sed -ze "1s/^${trim}${before_escaped}${trim}${left_escaped}/${left_replacement}/" \
+        | sed -ze "\$s/${right_escaped}${trim}${after_escaped}${trim}/${right_replacement}/" \
+        | sed -e "s/^${left_trim}${left_escaped}//" -e "s/${right_escaped}${right_trim}$//"
 	shift
 	file="$1"
 done
