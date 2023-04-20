@@ -42,10 +42,10 @@ $ qaj -h
 $ uqaj -h
 ----
 
-== TLDR qaj
+== Examples qaj
 
 include::qaj.adoc[tag=examples]
 
-== TLDR uqaj
+== Examples uqaj
 
 include::uqaj.adoc[tag=examples]
