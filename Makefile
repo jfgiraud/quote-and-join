@@ -1,6 +1,7 @@
 DESTDIR ?= /usr/local
 REPOSITORY_NAME ?= quote-and-join
 SCRIPTS = qaj uqaj
+BIN_SCRIPTS = $(foreach script,$(SCRIPTS),bin/$(script))
 GENERATED_FILES = doc/generated/man/man1/qaj.1 doc/generated/txt/qaj.1.txt doc/generated/man/man1/uqaj.1 doc/generated/txt/uqaj.1.txt doc/generated/md/qaj.md doc/generated/md/uqaj.md doc/generated/md/readme.md
 VERSION ?= $(shell cat doc/VERSION)
 FILE_VERSION ?= $(shell cat doc/VERSION)
@@ -33,23 +34,35 @@ install-dependencies:
 	echo "You must install dependencies."
 	echo "sudo make install-dependencies"
 
-doc/generated/man/man1/%.1: doc/%.adoc doc/VERSION
-	@echo "Generate $@"
+.PHONY: update-year
+update-year:
+	@echo "Update year in doc/copyright.adoc"
+	@year=$(shell date +'%Y')
+	@sed -ri "s#Copyright \(C\) [0-9]{4}#Copyright (C) $$year#" doc/copyright.adoc
+
+doc/generated/man/man1/%.1: doc/%.adoc doc/VERSION doc/copyright.adoc
+	@echo "Create $@"
 	@asciidoctor -b manpage -a release-version="$(VERSION)" $< -o $@
 
-doc/generated/md/%.md: doc/%.adoc doc/VERSION
-	@echo "Generate $@"
+doc/generated/md/%.md: doc/%.adoc doc/VERSION doc/copyright.adoc
+	@echo "Create $@"
 	@SCRIPT=$(shell basename "$@" | sed 's/\..*//')
 	@asciidoctor -b docbook doc/$$SCRIPT.adoc -o doc/generated/md/$$SCRIPT.xml
 	@pandoc -t gfm+footnotes -f docbook -t markdown_strict doc/generated/md/$$SCRIPT.xml -o doc/generated/md/$$SCRIPT.md
 	@rm -f doc/generated/md/$$SCRIPT.xml
 
-doc/generated/txt/%.1.txt: doc/generated/man/man1/%.1 doc/VERSION
-	@echo "Generate $@"
+doc/generated/txt/%.1.txt: doc/generated/man/man1/%.1 doc/VERSION doc/copyright.adoc
+	@echo "Create $@"
 	@man -l $< > $@
 	@SCRIPT=$(shell basename "$@" | sed 's/\..*//')
 	@echo "Rewrite usage in $$SCRIPT"
-	@awk -i inplace -v input="$@" 'BEGIN { p = 1 } /#BEGIN_DO_NOT_MODIFY:make update-doc/{ print; p = 0; while(getline line<input){print line} } /#END_DO_NOT_MODIFY:make update-doc/{ p = 1 } p' bin/$$SCRIPT
+	@awk -i inplace -v input="$@" 'BEGIN { p = 1 } /^#BEGIN_DO_NOT_MODIFY:make update-doc/{ print; p = 0; while(getline line<input){print line} } /^#END_DO_NOT_MODIFY:make update-doc/{ p = 1 } p' bin/$$SCRIPT
+
+README.md: doc/generated/md/readme.md
+	@echo "Generate README.md"
+	@printf "\n[//]: # (This file is generated, modify doc/readme.adoc and regenerate it with 'make update-doc')\n\n" > README.md
+	@cat doc/generated/md/readme.md >> README.md
+	@rm -f doc/generated/md/readme.md
 
 .PHONY: update-version
 update-version:
@@ -59,14 +72,15 @@ update-version:
 	make update-doc
 
 .PHONY: update-doc
-update-doc: $(GENERATED_FILES)
-	@echo "Generate README.md"
-	@printf "\n[//]: # (This file is generated, modify doc/readme.adoc and regenerate it with 'make update-doc')\n\n" > README.md
-	@cat doc/generated/md/readme.md >> README.md
+update-doc: $(GENERATED_FILES) README.md
+
+.PHONY: update-script
+update-script: $(BIN_SCRIPTS) doc/VERSION
 
 .PHONY: commit-release
 commit-release: update-version
 	@echo "Update documentation"
+	make update-year
 	make update-doc
 	@echo "Commit release $$VERSION"
 	git add -u .
@@ -74,7 +88,6 @@ commit-release: update-version
 	git push
 	git tag "v$$VERSION" -m "Tag v$$VERSION"
 	git push --tags
-
 
 .PHONY: test
 test:

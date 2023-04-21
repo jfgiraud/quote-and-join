@@ -1,9 +1,9 @@
 #!/bin/bash
 
-usage() {
+function usage() {
     (cat <<-EOF
 #BEGIN_DO_NOT_MODIFY:make update-doc
-UQAJ(1)                                                  User commands                                                  UQAJ(1)
+UQAJ(1)                                                                                  User commands                                                                                  UQAJ(1)
 
 NAME
        uqaj - split and unquote lines in files
@@ -19,6 +19,9 @@ DESCRIPTION
 OPTIONS
        -h
            Display help.
+
+       -v
+           Display version.
 
    Unquoting
        -q
@@ -87,15 +90,21 @@ EXAMPLES
            est
 
 AUTHOR
-       Written by Jean-François Giraud. == COPYRIGHT
+       Written by Jean-François Giraud.
 
-       Copyright © 2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later http://gnu.org/licenses/gpl.html. This
-       is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law.
+COPYRIGHT
+       Copyright © 2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it.
+       There is NO WARRANTY, to the extent permitted by law.
 
-quote-and-join 0.0.43                                      2023-03-26                                                   UQAJ(1)
+quote-and-join 0.0.43                                                                      2023-04-21                                                                                   UQAJ(1)
 #END_DO_NOT_MODIFY:make update-doc
 EOF
-) | tail -n +4 | head -n -9
+) | awk '/#BEGIN_DO_NOT_MODIFY:make update-doc/,/^#END_DO_NOT_MODIFY:make update-doc/' | awk '/NAME/,/AUTHOR/' | tail -n +1 | head -n -1
+    exit 0
+}
+
+function display_version() {
+    grep -B1 '#END_DO_NOT_MODIFY:make update-doc' $0 | head -n1 | cut -d ' ' -f2
     exit 0
 }
 
@@ -106,7 +115,7 @@ left=''
 right=''
 join='\n'
 trim="[[:space:]]*"
-while getopts ":qhj:JA:a:B:b:c:p:P:" o
+while getopts ":qhj:JA:a:B:b:c:p:P:v" o
 do
   	case "$o" in
 		b)
@@ -168,6 +177,9 @@ do
 		    ;;
 		B)
 		    after="$OPTARG"
+		    ;;
+		v)
+		    display_version
 		    ;;
         ?) error 1 $"invalid option -- '$OPTARG'";;
 	esac

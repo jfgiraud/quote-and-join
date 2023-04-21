@@ -42,8 +42,8 @@ Usages
     $ qaj -h
     $ uqaj -h
 
-TLDR qaj
-========
+Examples qaj
+============
 
 **Quote words with `'` and join with `,`.**
 
@@ -90,8 +90,8 @@ prefix and suffix on the final result..**
     $ printf "lorem\nipsum\n dolores\n\nest" | qaj -qq -j, -A 'Final result: ' -B '.'
     Final result: "lorem","ipsum","dolores","est".
 
-TLDR uqaj
-=========
+Examples uqaj
+=============
 
 **Remove prefix `before`, remove suffix `after`, split using `,`,
 unquote using `{}`.**

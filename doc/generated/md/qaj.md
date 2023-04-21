@@ -31,6 +31,9 @@ OPTIONS
 **-h**  
 Display help.
 
+**-v**  
+Display version.
+
 Select and sort items
 ---------------------
 

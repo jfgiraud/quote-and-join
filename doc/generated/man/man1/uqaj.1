@@ -1,32 +1,23 @@
 '\" t
 .\"     Title: uqaj
-.\"    Author: [see the "AUTHOR(S)" section]
-.\" Generator: Asciidoctor 2.0.12
-.\"      Date: 2023-03-26
+.\"    Author: [see the "AUTHORS" section]
+.\" Generator: Asciidoctor 1.5.5
+.\"      Date: 2023-04-21
 .\"    Manual: User commands
 .\"    Source: quote-and-join 0.0.43
 .\"  Language: English
 .\"
-.TH "UQAJ" "1" "2023-03-26" "quote\-and\-join 0.0.43" "User commands"
+.TH "UQAJ" "1" "2023-04-21" "quote\-and\-join 0.0.43" "User commands"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
 .nh
 .ad l
 .de URL
-\fI\\$2\fP <\\$1>\\$3
+\\$2 \(laURL: \\$1 \(ra\\$3
 ..
-.als MTO URL
-.if \n[.g] \{\
-.  mso www.tmac
-.  am URL
-.    ad l
-.  .
-.  am MTO
-.    ad l
-.  .
-.  LINKSTYLE blue R < >
-.\}
+.if \n[.g] .mso www.tmac
+.LINKSTYLE blue R < >
 .SH "NAME"
 uqaj \- split and unquote lines in files
 .SH "SYNOPSIS"
@@ -36,23 +27,28 @@ uqaj \- split and unquote lines in files
 .sp
 Split and unquote lines in files
 .sp
-With no FILE, or when FILE is \f(CR\-\fP, read standard input.
+With no FILE, or when FILE is \f[CR]\-\fP, read standard input.
 .SH "OPTIONS"
 .sp
 \fB\-h\fP
 .RS 4
 Display help.
 .RE
+.sp
+\fB\-v\fP
+.RS 4
+Display version.
+.RE
 .SS "Unquoting"
 .sp
 \fB\-q\fP
 .RS 4
-Unquote items with the character \f(CR\(aq\fP
+Unquote items with the character \f[CR]\(aq\fP
 .RE
 .sp
 \fB\-qq\fP
 .RS 4
-Unquote items with the character \f(CR"\fP
+Unquote items with the character \f[CR]"\fP
 .RE
 .sp
 \fB\-a\fP \fIstring\fP
@@ -72,7 +68,7 @@ Remove prefix and suffix specified by string
 .sp
 \fB\-p\fP \fIstring\fP
 .RS 4
-The given string must be \f(CR<\fP, \f(CR{\fP, \f(CR(\fP or \f(CR[\fP. Remove the given parenthese and associated closing parenthese of each items.
+The given string must be \f[CR]<\fP, \f[CR]{\fP, \f[CR](\fP or \f[CR][\fP. Remove the given parenthese and associated closing parenthese of each items.
 .RE
 .SS "Splitting"
 .sp
@@ -83,7 +79,7 @@ Split using the given string
 .sp
 \fB\-J\fP
 .RS 4
-Split using the character \f(CR,\fP
+Split using the character \f[CR],\fP
 .RE
 .SS "Before the process of splitting and unquoting"
 .sp
@@ -104,60 +100,66 @@ Remove prefix and suffix specified by string
 .sp
 \fB\-P\fP \fIstring\fP
 .RS 4
-Remove prefix (parenthese is \f(CR<\fP, \f(CR{\fP, \f(CR(\fP or \f(CR[\fP) and suffix (associated parenthese).
+Remove prefix (parenthese is \f[CR]<\fP, \f[CR]{\fP, \f[CR](\fP or \f[CR][\fP) and suffix (associated parenthese).
 .RE
 .SH "EXAMPLES"
 .sp
-.B Remove prefix \f(CRbefore\fP, remove suffix \f(CRafter\fP, split using \f(CR,\fP, unquote using \f(CR{}\fP
+.B Remove prefix \f[CR]before\fP, remove suffix \f[CR]after\fP, split using \f[CR],\fP, unquote using \f[CR]{}\fP
 .br
 .sp
-.if n .RS 4
+.if n \{\
+.RS 4
+.\}
 .nf
-.fam C
 $ s="before{first item},{second  item},{third item}after"
 $ echo $s | uqaj \-j, \-p\(aq{\(aq \-A before \-B after
 first item
 second item
 third item
-.fam
 .fi
-.if n .RE
+.if n \{\
+.RE
+.\}
 .sp
-.B Remove prefix \f(CR<\fP, remove suffix \f(CR>\fP, split using \f(CR,\fP, unquote using \f(CR"\fP
+.B Remove prefix \f[CR]<\fP, remove suffix \f[CR]>\fP, split using \f[CR],\fP, unquote using \f[CR]"\fP
 .br
 .sp
-.if n .RS 4
+.if n \{\
+.RS 4
+.\}
 .nf
-.fam C
 $ s=\(aq<"lorem", "ipsum", "dolores", "est">\(aq
 $ echo $s | uqaj \-J \-A \(aq<\(aq \-B \(aq>\(aq \-qq
 lorem
 ipsum
 dolores
 est
-.fam
 .fi
-.if n .RE
+.if n \{\
+.RE
+.\}
 .sp
-.B Remove prefix \f(CR<\fP, remove suffix \f(CR>\fP, split using \f(CR,\fP, unquote using \f(CR"\fP
+.B Remove prefix \f[CR]<\fP, remove suffix \f[CR]>\fP, split using \f[CR],\fP, unquote using \f[CR]"\fP
 .br
 .sp
-.if n .RS 4
+.if n \{\
+.RS 4
+.\}
 .nf
-.fam C
 $ s=$\(aq<"lorem",\(rsn"ipsum", "dolores",\(rsn"est">\(aq
 $ echo $s | uqaj \-J \-A \(aq<\(aq \-B \(aq>\(aq \-qq
 lorem
 ipsum
 dolores
 est
-.fam
 .fi
-.if n .RE
+.if n \{\
+.RE
+.\}
 .SH "AUTHOR"
 .sp
 Written by Jean\-François Giraud.
-== COPYRIGHT
+.SH "COPYRIGHT"
 .sp
 Copyright \(co 2020 Jean\-François Giraud.  License GPLv3+: GNU GPL version 3 or later \c
 .URL "http://gnu.org/licenses/gpl.html" "" "."

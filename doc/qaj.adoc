@@ -35,6 +35,9 @@ With no FILE, or when FILE is `-`, read standard input.
 *-h*::
 Display help.
 
+*-v*::
+Display version.
+
 === Select and sort items
 
 *-w*::

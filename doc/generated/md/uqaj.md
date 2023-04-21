@@ -21,6 +21,9 @@ OPTIONS
 **-h**  
 Display help.
 
+**-v**  
+Display version.
+
 Unquoting
 ---------
 
