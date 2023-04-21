@@ -93,10 +93,10 @@ AUTHOR
        Written by Jean-François Giraud.
 
 COPYRIGHT
-       Copyright © 2020 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it.
+       Copyright © 2023 Jean-François Giraud. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>. This is free software: you are free to change and redistribute it.
        There is NO WARRANTY, to the extent permitted by law.
 
-quote-and-join 0.0.43                                                                      2023-04-21                                                                                   UQAJ(1)
+quote-and-join 0.0.44                                                                      2023-04-21                                                                                   UQAJ(1)
 #END_DO_NOT_MODIFY:make update-doc
 EOF
 ) | awk '/#BEGIN_DO_NOT_MODIFY:make update-doc/,/^#END_DO_NOT_MODIFY:make update-doc/' | awk '/NAME/,/AUTHOR/' | tail -n +1 | head -n -1
