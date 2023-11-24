@@ -58,6 +58,10 @@ assert_exec_equals \
     'printf "[\"a\",\n\"b\",\n\"c\"\n]" | ../bin/uqaj -P"[" -j",\n" -qq' \
     $'a\nb\nc'
 
+assert_exec_equals \
+    'printf "/*/*a*/,\n/*b*/,\n/*c*/*/" | ../bin/uqaj -A"/*" -B"*/" -a"/*" -b"*/" -j",\n"' \
+    $'a\nb\nc'
+
 echo "${ok}/${total} (${ko} errors)"
 
 if [[ ${ok} -ne ${total} ]]; then
